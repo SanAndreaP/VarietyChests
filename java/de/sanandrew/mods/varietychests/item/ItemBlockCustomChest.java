@@ -7,6 +7,7 @@
 package de.sanandrew.mods.varietychests.item;
 
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
+import de.sanandrew.mods.varietychests.util.ChestTypes;
 import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -112,8 +113,9 @@ public class ItemBlockCustomChest
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List stacks) {
-        stacks.add(new ItemStack(this, 1, 0));
-        stacks.add(new ItemStack(this, 1, 1));
+        for( int i : ChestTypes.types.keySet() ) {
+            stacks.add(new ItemStack(this, 1, i));
+        }
 //        super.getSubItems(item, tab, list);
     }
 }

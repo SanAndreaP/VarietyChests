@@ -14,12 +14,13 @@ import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 @Mod(modid = VarietyChests.MODID, version = VarietyChests.VERSION)
 public class VarietyChests
 {
-    public static final String MODID = "examplemod";
+    public static final String MODID = "varietychests";
     public static final String VERSION = "1.0";
 
     public static Block customChest;
@@ -35,6 +36,13 @@ public class VarietyChests
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCustomChest.class, new TileEntityCustomChestRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(customChest), new ItemRendererCustomChest());
+
+        ChestTypes.registerChestType(-1, new ResourceLocation(MODID, "textures/entity/chest/spruce.png"),
+                                     new ResourceLocation(MODID, "textures/entity/chest/spruce_double.png"), MODID + ":spruceChest", null, null);
+        ChestTypes.registerChestType(-1, new ResourceLocation(MODID, "textures/entity/chest/birch.png"),
+                                     new ResourceLocation(MODID, "textures/entity/chest/birch_double.png"), MODID + ":spruceChest", null, null);
+        ChestTypes.registerChestType(-1, new ResourceLocation(MODID, "textures/entity/chest/jungle.png"),
+                                     new ResourceLocation(MODID, "textures/entity/chest/jungle_double.png"), MODID + ":spruceChest", null, null);
     }
 
     @EventHandler

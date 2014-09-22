@@ -6,26 +6,21 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.client;
 
-import com.example.examplemod.ExampleMod;
 import cpw.mods.fml.common.FMLLog;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
+import de.sanandrew.mods.varietychests.util.ChestTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class TileEntityCustomChestRenderer
         extends TileEntitySpecialRenderer
 {
-    private static final ResourceLocation TEX_SPRUCE_DBL = new ResourceLocation(ExampleMod.MODID, "textures/entity/chest/spruce_double.png");
-    private static final ResourceLocation TEX_SPRUCE_SNG = new ResourceLocation(ExampleMod.MODID, "textures/entity/chest/spruce.png");
-    private static final ResourceLocation TEX_BIRCH_DBL = new ResourceLocation(ExampleMod.MODID, "textures/entity/chest/birch_double.png");
-    private static final ResourceLocation TEX_BIRCH_SNG = new ResourceLocation(ExampleMod.MODID, "textures/entity/chest/birch.png");
     private ModelChest modelSingleChest = new ModelChest();
     private ModelChest modelDoubleChest = new ModelLargeChest();
 
@@ -65,19 +60,11 @@ public class TileEntityCustomChestRenderer
             if( chest.adjacentChestXPos == null && chest.adjacentChestZPos == null ) {
                 modelchest = this.modelSingleChest;
 
-                if( chest.func_145980_j() == 0 ) {
-                    this.bindTexture(TEX_SPRUCE_SNG);
-                } else {
-                    this.bindTexture(TEX_BIRCH_SNG);
-                }
+                this.bindTexture(ChestTypes.types.get(chest.func_145980_j()).textureSng);
             } else {
                 modelchest = this.modelDoubleChest;
 
-                if( chest.func_145980_j() == 0 ) {
-                    this.bindTexture(TEX_SPRUCE_DBL);
-                } else {
-                    this.bindTexture(TEX_BIRCH_DBL);
-                }
+                this.bindTexture(ChestTypes.types.get(chest.func_145980_j()).textureDbl);
             }
 
             GL11.glPushMatrix();
