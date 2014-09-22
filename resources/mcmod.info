@@ -1,0 +1,16 @@
+[
+{
+  "modid": "varietychests",
+  "name": "Variety Chests",
+  "description": "A mod which adds new chests into Minecraft, which are purely asthetic.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["SanAndreasP"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
