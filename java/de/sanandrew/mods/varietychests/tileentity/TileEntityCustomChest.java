@@ -1,12 +1,13 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.tileentity;
 
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
+import de.sanandrew.mods.varietychests.util.ChestType;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -18,7 +19,7 @@ import net.minecraft.util.AxisAlignedBB;
 public class TileEntityCustomChest
         extends TileEntityChest
 {
-    public int chestType = -1;
+    public String chestType = ChestType.NULL_TYPE.name;
 
     public TileEntityCustomChest() {
     }
@@ -27,26 +28,26 @@ public class TileEntityCustomChest
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
-        nbt.setInteger("type", this.chestType);
+        nbt.setString("type", this.chestType);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
-        this.chestType = nbt.getInteger("type");
+        this.chestType = nbt.getString("type");
     }
 
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("type", this.chestType);
+        nbt.setString("type", this.chestType);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        this.chestType = pkt.func_148857_g().getInteger("type");
+        this.chestType = pkt.func_148857_g().getString("type");
     }
 
     @Override
@@ -94,7 +95,11 @@ public class TileEntityCustomChest
 
     @Override
     public int func_145980_j() {
-        return this.chestType;
+        return this.chestType.hashCode();
+    }
+
+    public ChestType getChestType() {
+        return ChestType.getType(this.chestType);
     }
 
     @Override

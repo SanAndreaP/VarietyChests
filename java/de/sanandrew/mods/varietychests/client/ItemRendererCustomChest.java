@@ -1,12 +1,13 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.client;
 
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
+import de.sanandrew.mods.varietychests.util.ChestType;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
@@ -39,7 +40,7 @@ public class ItemRendererCustomChest
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         }
 
-        this.chest.chestType = item.getItemDamage();
+        this.chest.chestType = ChestType.getTypeFromItemStack(item);
         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chest, 0.0D, 0.0D, 0.0D, 0.0F);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();

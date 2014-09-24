@@ -1,13 +1,13 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.item;
 
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
-import de.sanandrew.mods.varietychests.util.ChestTypes;
+import de.sanandrew.mods.varietychests.util.ChestType;
 import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -70,29 +70,29 @@ public class ItemBlockCustomChest
             }
         }
 
-        return this.canPlaceChestAt(world, placingX, placingY, placingZ, stack.getItemDamage())
+        return this.canPlaceChestAt(world, placingX, placingY, placingZ, ChestType.getTypeFromItemStack(stack))
                 && super.onItemUse(stack, player, world, x, y, z, side, xOff, yOff, zOff);
     }
 
 
-    private boolean canPlaceChestAt(World world, int x, int y, int z, int type) {
+    private boolean canPlaceChestAt(World world, int x, int y, int z, String type) {
         int typeCounter = 0;
 
         BlockCustomChest cChest = (BlockCustomChest) VarietyChests.customChest;
 
-        if( cChest.getChestType(world, x - 1, y, z) == type ) {
+        if( cChest.getChestType(world, x - 1, y, z).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x + 1, y, z) == type ) {
+        if( cChest.getChestType(world, x + 1, y, z).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x, y, z - 1) == type ) {
+        if( cChest.getChestType(world, x, y, z - 1).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x, y, z + 1) == type ) {
+        if( cChest.getChestType(world, x, y, z + 1).equals(type) ) {
             ++typeCounter;
         }
 
@@ -103,19 +103,24 @@ public class ItemBlockCustomChest
                 && !this.hasAdjancentChest(world, x, y, z + 1, cChest, type);
     }
 
-    private boolean hasAdjancentChest(World world, int x, int y, int z, BlockCustomChest chest, int type) {
-        return chest.getChestType(world, x, y, z) == type
-                && (chest.getChestType(world, x - 1, y, z) == type
-                    || chest.getChestType(world, x + 1, y, z) == type
-                    || chest.getChestType(world, x, y, z - 1) == type
-                    || chest.getChestType(world, x, y, z + 1) == type);
+    private boolean hasAdjancentChest(World world, int x, int y, int z, BlockCustomChest chest, String type) {
+        return chest.getChestType(world, x, y, z).equals(type)
+                && (chest.getChestType(world, x - 1, y, z).equals(type)
+                    || chest.getChestType(world, x + 1, y, z).equals(type)
+                    || chest.getChestType(world, x, y, z - 1).equals(type)
+                    || chest.getChestType(world, x, y, z + 1).equals(type));
     }
 
     @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        return this.field_150939_a.getUnlocalizedName() + "." + ChestType.getTypeFromItemStack(stack);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public void getSubItems(Item item, CreativeTabs tab, List stacks) {
-        for( int i : ChestTypes.types.keySet() ) {
-            stacks.add(new ItemStack(this, 1, i));
+        for( String s : ChestType.getTypeNames() ) {
+            stacks.add(ChestType.getNewItemStackFromType(s, 1));
         }
-//        super.getSubItems(item, tab, list);
     }
 }

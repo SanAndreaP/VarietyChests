@@ -1,0 +1,6 @@
+tile.varietychests:customChest.spruce.name=Spruce Chest
+tile.varietychests:customChest.birch.name=Birch Chest
+tile.varietychests:customChest.jungle.name=Jungle Chest
+tile.varietychests:customChest.acacia.name=Acacia Chest
+tile.varietychests:customChest.darkoak.name=Dark Oak Chest
+tile.varietychests:customChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.

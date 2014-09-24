@@ -1,6 +1,6 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
@@ -9,7 +9,6 @@ package de.sanandrew.mods.varietychests.client;
 import cpw.mods.fml.common.FMLLog;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
-import de.sanandrew.mods.varietychests.util.ChestTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
@@ -60,11 +59,11 @@ public class TileEntityCustomChestRenderer
             if( chest.adjacentChestXPos == null && chest.adjacentChestZPos == null ) {
                 modelchest = this.modelSingleChest;
 
-                this.bindTexture(ChestTypes.types.get(chest.func_145980_j()).textureSng);
+                this.bindTexture(chest.getChestType().textureSng);
             } else {
                 modelchest = this.modelDoubleChest;
 
-                this.bindTexture(ChestTypes.types.get(chest.func_145980_j()).textureDbl);
+                this.bindTexture(chest.getChestType().textureDbl);
             }
 
             GL11.glPushMatrix();
