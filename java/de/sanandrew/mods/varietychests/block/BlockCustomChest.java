@@ -8,6 +8,7 @@ package de.sanandrew.mods.varietychests.block;
 
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,6 +34,7 @@ public class BlockCustomChest
 {
     public BlockCustomChest() {
         super(-1);
+        this.setStepSound(Block.soundTypeWood);
     }
 
     @Override

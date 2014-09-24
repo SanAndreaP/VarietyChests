@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+version = "1.7.10-1.0.0"
+group = "de.sanandrew.mods.varietychests"
+archivesBaseName = 'VarietyChests'
+
+minecraft {
+	version = "1.7.10-10.13.0.1208"
+    runDir = "eclipse/assets"
+}
+
+dependencies {
+    compile fileTree(dir: 'build/dependencies', include: ['SAPManPack*-deobf.jar'])
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+sourceSets {
+    main {
+        java { srcDir 'java' }
+        resources { srcDir 'resources' }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    appendix = 'src'
+    archiveName = baseName + "-" + version + "-" + appendix + ".jar"
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    appendix = 'deobf'
+    archiveName = baseName + "-" + version + "-" + appendix + ".jar"
+}
+
+artifacts {
+	archives deobfJar
+	archives sourceJar
+	archives jar
+}
