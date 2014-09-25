@@ -1,0 +1,6 @@
+tile.varietychests:customChest.spruce.name=Fichtenholzkiste
+tile.varietychests:customChest.birch.name=Birkenholzkiste
+tile.varietychests:customChest.jungle.name=Tropenholzkiste
+tile.varietychests:customChest.acacia.name=Akazienholzbretter
+tile.varietychests:customChest.darkoak.name=Schwarzeichenholzkiste
+tile.varietychests:customChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.

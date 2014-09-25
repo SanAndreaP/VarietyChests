@@ -6,15 +6,14 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.block;
 
-import de.sanandrew.core.manpack.util.SAPUtils;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
@@ -27,6 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import static net.minecraftforge.common.util.ForgeDirection.DOWN;
@@ -130,20 +130,20 @@ public class BlockCustomChest
 
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-        return new ArrayList<>();
+        return new ArrayList<>(Collections.singletonList(ChestType.getNewItemStackFromType(this.getChestType(world, x, y, z), 1)));
     }
 
+    // prevents destroying the TileEntity before I can gain its data for the dropped item; Thanks to diesieben07 for pointing this out
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-        ItemStack droppedItem = ChestType.getNewItemStackFromType(this.getChestType(world, x, y, z), 1);
-        float rndX = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
-        float rndY = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
-        float rndZ = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
-        EntityItem entityItem = new EntityItem(world, (double)((float)x + rndX), (double)((float)y + rndY), (double)((float)z + rndZ), droppedItem);
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+        return willHarvest || super.removedByPlayer(world, player, x, y, z, false);
+    }
 
-        world.spawnEntityInWorld(entityItem);
-
-        super.breakBlock(world, x, y, z, block, meta);
+    // deletes the block after I gained its data for the dropped item; Thanks to diesieben07 for pointing this out
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
+        super.harvestBlock(world, player, x, y, z, meta);
+        world.setBlockToAir(x, y, z);
     }
 
     @Override
