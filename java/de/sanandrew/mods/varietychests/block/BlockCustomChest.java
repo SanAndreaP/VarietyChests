@@ -6,12 +6,14 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.block;
 
+import de.sanandrew.core.manpack.util.SAPUtils;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
@@ -128,9 +130,20 @@ public class BlockCustomChest
 
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-        ArrayList<ItemStack> items = new ArrayList<>();
-        items.add(ChestType.getNewItemStackFromType(this.getChestType(world, x, y, z), 1));
-        return items;
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+        ItemStack droppedItem = ChestType.getNewItemStackFromType(this.getChestType(world, x, y, z), 1);
+        float rndX = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
+        float rndY = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
+        float rndZ = SAPUtils.RNG.nextFloat() * 0.8F + 0.1F;
+        EntityItem entityItem = new EntityItem(world, (double)((float)x + rndX), (double)((float)y + rndY), (double)((float)z + rndZ), droppedItem);
+
+        world.spawnEntityInWorld(entityItem);
+
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override
@@ -212,11 +225,9 @@ public class BlockCustomChest
     }
 
     public String getChestType(IBlockAccess blockAccess, int x, int y, int z) {
-        if( blockAccess.getBlock(x, y, z) == this ) {
-            TileEntity te = blockAccess.getTileEntity(x, y, z);
-            if( te instanceof TileEntityCustomChest ) {
-                return ((TileEntityCustomChest) te).chestType;
-            }
+        TileEntity te = blockAccess.getTileEntity(x, y, z);
+        if( te instanceof TileEntityCustomChest ) {
+            return ((TileEntityCustomChest) te).chestType;
         }
 
         return ChestType.NULL_TYPE.name;

@@ -25,6 +25,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = VarietyChests.MODID, version = VarietyChests.VERSION, name = "Variety Chests")
 public final class VarietyChests
@@ -43,7 +44,9 @@ public final class VarietyChests
 //        ModConfig.syncConfig();
 
         customChest = new BlockCustomChest();
-        customChest.setBlockName(MODID + ":customChest");
+        customChest.setBlockName(MODID + ":customChest")
+                   .setHardness(2.5F)
+                   .setHarvestLevel("axe", -1);
 
         SAPUtils.registerBlockWithItem(customChest, ItemBlockCustomChest.class);
 
@@ -51,6 +54,8 @@ public final class VarietyChests
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCustomChest.class, new TileEntityCustomChestRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(customChest), new ItemRendererCustomChest());
+
+        OreDictionary.registerOre("chestWood", customChest);
 
         this.registerChestTypes();
     }
