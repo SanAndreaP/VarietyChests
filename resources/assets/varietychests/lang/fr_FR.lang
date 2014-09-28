@@ -4,3 +4,11 @@ tile.varietychests:customChest.jungle.name=Coffre de la Jungle
 tile.varietychests:customChest.acacia.name=Coffre en Acacia
 tile.varietychests:customChest.darkoak.name=Coffre en Chêne Sombre
 tile.varietychests:customChest.NULL_CHEST.name=Vous n'êtes pas supposés voir ça écrit! Sérieusement, SVP, mettez-le ailleurs!
+
+tile.varietychests:customGlowingChest.spruce.name=Coffre Brillant en Pin
+tile.varietychests:customGlowingChest.birch.name=Coffre Brillant en Bouleau
+tile.varietychests:customGlowingChest.jungle.name=Coffre Brillant de la Jungle
+tile.varietychests:customGlowingChest.acacia.name=Coffre Brillant en Acacia
+tile.varietychests:customGlowingChest.darkoak.name=Coffre Brillant en Chêne Sombre
+tile.varietychests:customGlowingChest.original.name=Coffre Brillant
+tile.varietychests:customGlowingChest.NULL_CHEST.name=Vous n'êtes pas supposés voir ça écrit! Sérieusement, SVP, mettez-le ailleurs!
