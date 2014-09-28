@@ -70,29 +70,29 @@ public class ItemBlockCustomChest
             }
         }
 
-        return this.canPlaceChestAt(world, placingX, placingY, placingZ, ChestType.getTypeFromItemStack(stack))
+        return this.canPlaceChestAt(world, placingX, placingY, placingZ, ChestType.getType(stack).name)
                 && super.onItemUse(stack, player, world, x, y, z, side, xOff, yOff, zOff);
     }
 
 
-    private boolean canPlaceChestAt(World world, int x, int y, int z, String type) {
+    protected boolean canPlaceChestAt(World world, int x, int y, int z, String type) {
         int typeCounter = 0;
 
         BlockCustomChest cChest = (BlockCustomChest) VarietyChests.customChest;
 
-        if( cChest.getChestType(world, x - 1, y, z).equals(type) ) {
+        if( world.getBlock(x - 1, y, z) == this.field_150939_a && cChest.getChestType(world, x - 1, y, z).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x + 1, y, z).equals(type) ) {
+        if( world.getBlock(x + 1, y, z) == this.field_150939_a && cChest.getChestType(world, x + 1, y, z).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x, y, z - 1).equals(type) ) {
+        if( world.getBlock(x, y, z - 1) == this.field_150939_a && cChest.getChestType(world, x, y, z - 1).equals(type) ) {
             ++typeCounter;
         }
 
-        if( cChest.getChestType(world, x, y, z + 1).equals(type) ) {
+        if( world.getBlock(x, y, z + 1) == this.field_150939_a && cChest.getChestType(world, x, y, z + 1).equals(type) ) {
             ++typeCounter;
         }
 
@@ -104,23 +104,27 @@ public class ItemBlockCustomChest
     }
 
     private boolean hasAdjancentChest(World world, int x, int y, int z, BlockCustomChest chest, String type) {
-        return chest.getChestType(world, x, y, z).equals(type)
-                && (chest.getChestType(world, x - 1, y, z).equals(type)
-                    || chest.getChestType(world, x + 1, y, z).equals(type)
-                    || chest.getChestType(world, x, y, z - 1).equals(type)
-                    || chest.getChestType(world, x, y, z + 1).equals(type));
+        boolean isCtrdSame = world.getBlock(x, y, z) == this.field_150939_a && chest.getChestType(world, x, y, z).equals(type);
+        boolean isZNegSame = world.getBlock(x, y, z - 1) == this.field_150939_a && chest.getChestType(world, x, y, z - 1).equals(type);
+        boolean isZPosSame = world.getBlock(x, y, z + 1) == this.field_150939_a && chest.getChestType(world, x, y, z + 1).equals(type);
+        boolean isXNegSame = world.getBlock(x - 1, y, z) == this.field_150939_a && chest.getChestType(world, x - 1, y, z).equals(type);
+        boolean isXPosSame = world.getBlock(x + 1, y, z) == this.field_150939_a && chest.getChestType(world, x + 1, y, z).equals(type);
+
+        return isCtrdSame && (isXNegSame || isXPosSame || isZNegSame || isZPosSame);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return this.field_150939_a.getUnlocalizedName() + "." + ChestType.getTypeFromItemStack(stack);
+        return this.field_150939_a.getUnlocalizedName() + "." + ChestType.getType(stack).name;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void getSubItems(Item item, CreativeTabs tab, List stacks) {
         for( String s : ChestType.getTypeNames() ) {
-            stacks.add(ChestType.getNewItemStackFromType(s, 1));
+            if( !(s.equals("original") && this.field_150939_a == VarietyChests.customChest) ) {
+                stacks.add(ChestType.getNewItemStackFromType(this.field_150939_a, s, 1));
+            }
         }
     }
 }

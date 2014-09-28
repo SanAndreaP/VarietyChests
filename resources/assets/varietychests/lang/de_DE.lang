@@ -1,6 +1,14 @@
-tile.varietychests:customChest.spruce.name=Fichtenholzkiste
-tile.varietychests:customChest.birch.name=Birkenholzkiste
-tile.varietychests:customChest.jungle.name=Tropenholzkiste
-tile.varietychests:customChest.acacia.name=Akazienholzbretter
-tile.varietychests:customChest.darkoak.name=Schwarzeichenholzkiste
+tile.varietychests:customChest.spruce.name=Fichtenholztruhe
+tile.varietychests:customChest.birch.name=Birkenholztruhe
+tile.varietychests:customChest.jungle.name=Tropenholztruhe
+tile.varietychests:customChest.acacia.name=Akazienholztruhe
+tile.varietychests:customChest.darkoak.name=Schwarzeichenholztruhe
 tile.varietychests:customChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.
+
+tile.varietychests:customGlowingChest.spruce.name=Leuchtende Fichtenholztruhe
+tile.varietychests:customGlowingChest.birch.name=Leuchtende Birkenholztruhe
+tile.varietychests:customGlowingChest.jungle.name=Leuchtende Tropenholztruhe
+tile.varietychests:customGlowingChest.acacia.name=Leuchtende Akazienholztruhe
+tile.varietychests:customGlowingChest.darkoak.name=Leuchtende Schwarzeichenholztruhe
+tile.varietychests:customGlowingChest.original.name=Leuchtende Truhe
+tile.varietychests:customGlowingChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.

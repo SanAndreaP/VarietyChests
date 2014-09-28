@@ -7,16 +7,15 @@
 package de.sanandrew.mods.varietychests.util;
 
 import de.sanandrew.core.manpack.util.NbtTypes;
-import net.minecraft.init.Blocks;
+import de.sanandrew.core.manpack.util.SAPUtils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChestType
 {
@@ -40,32 +39,27 @@ public class ChestType
         return types.keySet().toArray(new String[types.size()]);
     }
 
-    public static void registerRecipes() {
-        for( Entry<String, ChestType> type : ChestType.types.entrySet() ) {
-            NBTTagCompound nbt = new NBTTagCompound();
-            ItemStack stack = new ItemStack(VarietyChests.customChest, 2);
-
-            nbt.setString(VarietyChests.NBT_CHEST_TYPE, type.getKey());
-            stack.setTagCompound(nbt);
-
-            CraftingManager.getInstance().addRecipe(stack,
-                                                    "###", "#C#", "###",
-                                                    '#', type.getValue().crfItem.copy(),
-                                                    'C', new ItemStack(Blocks.chest));
-        }
-    }
-
-    public static String getTypeFromItemStack(ItemStack stack) {
+    public static ChestType getType(ItemStack stack) {
         if( !stack.hasTagCompound() || !stack.getTagCompound().hasKey(VarietyChests.NBT_CHEST_TYPE, NbtTypes.NBT_STRING) ) {
-            return NULL_TYPE.name;
+            return NULL_TYPE;
         }
 
-        return stack.getTagCompound().getString(VarietyChests.NBT_CHEST_TYPE);
+        return getType(stack.getTagCompound().getString(VarietyChests.NBT_CHEST_TYPE));
     }
 
-    public static ItemStack getNewItemStackFromType(String type, int count) {
+    public static ChestType getTypeFromCraftingMaterial(ItemStack stack) {
+        for( ChestType type : types.values() ) {
+            if( SAPUtils.areStacksEqualWithWCV(stack, type.crfItem) ) {
+                return type;
+            }
+        }
+
+        return NULL_TYPE;
+    }
+
+    public static ItemStack getNewItemStackFromType(Block block, String type, int count) {
         NBTTagCompound nbt = new NBTTagCompound();
-        ItemStack stack = new ItemStack(Item.getItemFromBlock(VarietyChests.customChest), count);
+        ItemStack stack = new ItemStack(Item.getItemFromBlock(block), count);
 
         nbt.setString(VarietyChests.NBT_CHEST_TYPE, type);
         stack.setTagCompound(nbt);

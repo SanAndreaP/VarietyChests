@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -54,41 +55,47 @@ public class TileEntityCustomChest
     public void checkForAdjacentChests() {
         if( !this.adjacentChestChecked ) {
             this.adjacentChestChecked = true;
+
+            TileEntity teNegZ = this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1);
+            TileEntity tePosZ = this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1);
+            TileEntity teNegX = this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord);
+            TileEntity tePosX = this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord);
+
             this.adjacentChestZNeg = null;
-            this.adjacentChestXPos = null;
-            this.adjacentChestXNeg = null;
             this.adjacentChestZPos = null;
+            this.adjacentChestXNeg = null;
+            this.adjacentChestXPos = null;
 
             if( this.isSameChest(this.xCoord - 1, this.yCoord, this.zCoord) ) {
-                this.adjacentChestXNeg = (TileEntityCustomChest) this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord);
+                this.adjacentChestXNeg = (TileEntityCustomChest) teNegX;
             }
 
             if( this.isSameChest(this.xCoord + 1, this.yCoord, this.zCoord) ) {
-                this.adjacentChestXPos = (TileEntityCustomChest) this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord);
+                this.adjacentChestXPos = (TileEntityCustomChest) tePosX;
             }
 
             if( this.isSameChest(this.xCoord, this.yCoord, this.zCoord - 1) ) {
-                this.adjacentChestZNeg = (TileEntityCustomChest) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1);
+                this.adjacentChestZNeg = (TileEntityCustomChest) teNegZ;
             }
 
             if( this.isSameChest(this.xCoord, this.yCoord, this.zCoord + 1) ) {
-                this.adjacentChestZPos = (TileEntityCustomChest) this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1);
+                this.adjacentChestZPos = (TileEntityCustomChest) tePosZ;
             }
 
-            if( this.adjacentChestZNeg != null ) {
-                ((TileEntityCustomChest) this.adjacentChestZNeg).updateChestChecked(this, 0);
+            if( teNegZ instanceof TileEntityCustomChest ) {
+                ((TileEntityCustomChest) teNegZ).updateChestChecked(this, 0);
             }
 
-            if( this.adjacentChestZPos != null ) {
-                ((TileEntityCustomChest) this.adjacentChestZPos).updateChestChecked(this, 2);
+            if( tePosZ instanceof TileEntityCustomChest ) {
+                ((TileEntityCustomChest) tePosZ).updateChestChecked(this, 2);
             }
 
-            if( this.adjacentChestXPos != null ) {
-                ((TileEntityCustomChest) this.adjacentChestXPos).updateChestChecked(this, 1);
+            if( teNegX instanceof TileEntityCustomChest ) {
+                ((TileEntityCustomChest) teNegX).updateChestChecked(this, 1);
             }
 
-            if( this.adjacentChestXNeg != null ) {
-                ((TileEntityCustomChest) this.adjacentChestXNeg).updateChestChecked(this, 3);
+            if( tePosX instanceof TileEntityCustomChest ) {
+                ((TileEntityCustomChest) tePosX).updateChestChecked(this, 3);
             }
         }
     }
@@ -112,7 +119,7 @@ public class TileEntityCustomChest
             return false;
         } else {
             Block block = this.worldObj.getBlock(x, y, z);
-            return block instanceof BlockCustomChest && ((BlockCustomChest) block).getChestType(this.worldObj, x, y, z) == this.chestType;
+            return block instanceof BlockCustomChest && block == this.getBlockType() && ((BlockCustomChest) block).getChestType(this.worldObj, x, y, z).equals(this.chestType);
         }
     }
 

@@ -8,6 +8,7 @@ package de.sanandrew.mods.varietychests.client;
 
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
@@ -20,17 +21,17 @@ public class ItemRendererCustomChest
     private TileEntityCustomChest chest = new TileEntityCustomChest();
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+    public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
         return true;
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack stack, ItemRendererHelper helper) {
         return true;
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+    public void renderItem(ItemRenderType type, ItemStack stack, Object... data) {
         GL11.glPushMatrix();
         GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 
@@ -40,7 +41,9 @@ public class ItemRendererCustomChest
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         }
 
-        this.chest.chestType = ChestType.getTypeFromItemStack(item);
+        this.chest.blockType = Block.getBlockFromItem(stack.getItem());
+        this.chest.chestType = ChestType.getType(stack).name;
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chest, 0.0D, 0.0D, 0.0D, 0.0F);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();

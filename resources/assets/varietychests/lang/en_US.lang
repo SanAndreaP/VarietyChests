@@ -4,3 +4,11 @@ tile.varietychests:customChest.jungle.name=Jungle Chest
 tile.varietychests:customChest.acacia.name=Acacia Chest
 tile.varietychests:customChest.darkoak.name=Dark Oak Chest
 tile.varietychests:customChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.
+
+tile.varietychests:customGlowingChest.spruce.name=Glowing Spruce Chest
+tile.varietychests:customGlowingChest.birch.name=Glowing Birch Chest
+tile.varietychests:customGlowingChest.jungle.name=Glowing Jungle Chest
+tile.varietychests:customGlowingChest.acacia.name=Glowing Acacia Chest
+tile.varietychests:customGlowingChest.darkoak.name=Glowing Dark Oak Chest
+tile.varietychests:customGlowingChest.original.name=Glowing Chest
+tile.varietychests:customGlowingChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.

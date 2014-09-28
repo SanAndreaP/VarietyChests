@@ -9,6 +9,7 @@ package de.sanandrew.mods.varietychests.client;
 import cpw.mods.fml.common.FMLLog;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
+import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
@@ -28,10 +29,13 @@ public class TileEntityCustomChestRenderer
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partTicks) {
-        this.renderTileEntityAt((TileEntityCustomChest)tile, x, y, z, partTicks);
+        this.renderChestAt((TileEntityCustomChest) tile, x, y, z, partTicks, 0);
+        if( tile.blockType == VarietyChests.customGlowingChest ) {
+            this.renderChestAt((TileEntityCustomChest) tile, x, y, z, partTicks, 1);
+        }
     }
 
-    public void renderTileEntityAt(TileEntityCustomChest chest, double x, double y, double z, float partTicks) {
+    public void renderChestAt(TileEntityCustomChest chest, double x, double y, double z, float partTicks, int pass) {
         int meta;
 
         if( !chest.hasWorldObj() ) {
@@ -59,11 +63,24 @@ public class TileEntityCustomChestRenderer
             if( chest.adjacentChestXPos == null && chest.adjacentChestZPos == null ) {
                 modelchest = this.modelSingleChest;
 
-                this.bindTexture(chest.getChestType().textureSng);
+                if( pass == 0 ) {
+                    this.bindTexture(chest.getChestType().textureSng);
+                } else {
+                    if( chest.blockType == VarietyChests.customGlowingChest ) {
+                        this.bindTexture(Textures.chest_glowmap_sng);
+                    }
+                }
+
             } else {
                 modelchest = this.modelDoubleChest;
 
-                this.bindTexture(chest.getChestType().textureDbl);
+                if( pass == 0 ) {
+                    this.bindTexture(chest.getChestType().textureDbl);
+                } else {
+                    if( chest.blockType == VarietyChests.customGlowingChest ) {
+                        this.bindTexture(Textures.chest_glowmap_dbl);
+                    }
+                }
             }
 
             GL11.glPushMatrix();
@@ -122,7 +139,14 @@ public class TileEntityCustomChestRenderer
             f1 = 1.0F - f1;
             f1 = 1.0F - f1 * f1 * f1;
             modelchest.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
-            modelchest.renderAll();
+            if( pass == 1 ) {
+                GL11.glEnable(GL11.GL_BLEND);
+                GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                modelchest.renderAll();
+                GL11.glDisable(GL11.GL_BLEND);
+            } else {
+                modelchest.renderAll();
+            }
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glPopMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -15,27 +15,34 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.sanandrew.core.manpack.util.SAPUtils;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
+import de.sanandrew.mods.varietychests.block.BlockCustomGlowingChest;
 import de.sanandrew.mods.varietychests.client.ItemRendererCustomChest;
 import de.sanandrew.mods.varietychests.client.TileEntityCustomChestRenderer;
+import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChests;
+import de.sanandrew.mods.varietychests.crafting.RecipeNormalChests;
 import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 
-@Mod(modid = VarietyChests.MODID, version = VarietyChests.VERSION, name = "Variety Chests")
+@Mod(modid = VarietyChests.MODID, version = VarietyChests.VERSION, name = "Variety Chests", dependencies = "required-after:sapmanpack@[2.0.0,)")
 public final class VarietyChests
 {
     public static final String MODID = "varietychests";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.1.0";
 
     public static final String NBT_CHEST_TYPE = "chestType";
 
     public static Block customChest;
+    public static Block customGlowingChest;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -48,14 +55,22 @@ public final class VarietyChests
                    .setHardness(2.5F)
                    .setHarvestLevel("axe", -1);
 
+        customGlowingChest = new BlockCustomGlowingChest();
+        customGlowingChest.setBlockName(MODID + ":customGlowingChest")
+                          .setHardness(2.5F)
+                          .setHarvestLevel("axe", -1);
+
         SAPUtils.registerBlockWithItem(customChest, ItemBlockCustomChest.class);
+        SAPUtils.registerBlockWithItem(customGlowingChest, ItemBlockCustomChest.class);
 
         GameRegistry.registerTileEntity(TileEntityCustomChest.class, MODID + ":customChestTE");
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCustomChest.class, new TileEntityCustomChestRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(customChest), new ItemRendererCustomChest());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(customGlowingChest), new ItemRendererCustomChest());
 
         OreDictionary.registerOre("chestWood", customChest);
+        OreDictionary.registerOre("chestWood", customGlowingChest);
 
         this.registerChestTypes();
     }
@@ -66,8 +81,13 @@ public final class VarietyChests
     }
 
     @EventHandler
+    @SuppressWarnings("unchecked")
     public void postInit(FMLPostInitializationEvent event) {
-        ChestType.registerRecipes();
+        RecipeSorter.register(VarietyChests.MODID + ":recipe_cchest", RecipeNormalChests.class, Category.SHAPED, "after:minecraft:shaped");
+        RecipeSorter.register(VarietyChests.MODID + ":recipe_glowcchest", RecipeGlowingChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
+
+        CraftingManager.getInstance().getRecipeList().add(new RecipeNormalChests());
+        CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChests());
     }
 
     private void registerChestTypes() {
@@ -90,6 +110,10 @@ public final class VarietyChests
         ChestType.registerChestType("darkoak", new ResourceLocation(MODID, "textures/entity/chest/darkoak.png"),
                                     new ResourceLocation(MODID, "textures/entity/chest/darkoak_double.png"),
                                     new ItemStack(Blocks.planks, 1, 5)
+        );
+        ChestType.registerChestType("original", new ResourceLocation("minecraft", "textures/entity/chest/normal.png"),
+                                    new ResourceLocation("minecraft", "textures/entity/chest/normal_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 0)
         );
     }
 }
