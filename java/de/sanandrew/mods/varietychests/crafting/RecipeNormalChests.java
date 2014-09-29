@@ -24,6 +24,10 @@ public class RecipeNormalChests
         ItemStack wood = null;
         for( int slotId = 0; slotId < 9; slotId++ ) {
             ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
+            if( slot == null ) {
+                return false;
+            }
+
             if( slotId == 4 ) {
                 Block block = Block.getBlockFromItem(slot.getItem());
                 if( block != Blocks.chest && block != VarietyChests.customChest ) {
