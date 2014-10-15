@@ -4,8 +4,10 @@
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
-package de.sanandrew.mods.varietychests.client;
+package de.sanandrew.mods.varietychests.client.renderer;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
 import net.minecraft.block.Block;
@@ -15,6 +17,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+@SideOnly(Side.CLIENT)
 public class ItemRendererCustomChest
         implements IItemRenderer
 {
