@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ChestType
 {
@@ -101,9 +102,9 @@ public class ChestType
 
         @Override
         public void putAll(Map<? extends String, ? extends ChestType> m) {
-            for( String key : m.keySet() ) {
-                if( this.containsKey(key) ) {
-                    throw new UnsupportedOperationException(String.format("Duplicate chest type! Tried to add %s with the ID of %s!", m.get(key).name, key));
+            for( Entry<? extends String, ? extends ChestType> entry : m.entrySet() ) {
+                if( this.containsKey(entry.getKey()) ) {
+                    throw new UnsupportedOperationException(String.format("Duplicate chest type! Tried to add %s with the ID of %s!", entry.getValue().name, entry.getKey()));
                 }
             }
 

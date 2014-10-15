@@ -10,7 +10,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -34,7 +33,7 @@ import net.minecraftforge.oredict.RecipeSorter.Category;
 public final class VarietyChests
 {
     public static final String MOD_ID = "varietychests";
-    public static final String VERSION = "1.1.1";
+    public static final String VERSION = "1.1.2";
     public static final String PROXY_CLIENT = "de.sanandrew.mods.varietychests.client.util.ClientProxy";
     public static final String PROXY_SERVER = "de.sanandrew.mods.varietychests.util.CommonProxy";
 
@@ -75,12 +74,7 @@ public final class VarietyChests
         OreDictionary.registerOre("chestWood", customChest);
         OreDictionary.registerOre("chestWood", customGlowingChest);
 
-        this.registerChestTypes();
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-
+        registerChestTypes();
     }
 
     @EventHandler
@@ -93,7 +87,7 @@ public final class VarietyChests
         CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChests());
     }
 
-    private void registerChestTypes() {
+    private static void registerChestTypes() {
         ChestType.registerChestType("spruce", new ResourceLocation(MOD_ID, "textures/entity/chest/spruce.png"),
                                     new ResourceLocation(MOD_ID, "textures/entity/chest/spruce_double.png"),
                                     new ItemStack(Blocks.planks, 1, 1)
