@@ -41,7 +41,7 @@ public class ChestType
     }
 
     public static ChestType getType(ItemStack stack) {
-        if( !stack.hasTagCompound() || !stack.getTagCompound().hasKey(VarietyChests.NBT_CHEST_TYPE, EnumNbtTypes.NBT_STRING) ) {
+        if( !stack.hasTagCompound() || !stack.getTagCompound().hasKey(VarietyChests.NBT_CHEST_TYPE, EnumNbtTypes.NBT_STRING.ordinal()) ) {
             return NULL_TYPE;
         }
 
@@ -104,7 +104,8 @@ public class ChestType
         public void putAll(Map<? extends String, ? extends ChestType> m) {
             for( Entry<? extends String, ? extends ChestType> entry : m.entrySet() ) {
                 if( this.containsKey(entry.getKey()) ) {
-                    throw new UnsupportedOperationException(String.format("Duplicate chest type! Tried to add %s with the ID of %s!", entry.getValue().name, entry.getKey()));
+                    throw new UnsupportedOperationException(String.format("Duplicate chest type! Tried to add %s with the ID of %s!", entry.getValue().name,
+                                                                          entry.getKey()));
                 }
             }
 
