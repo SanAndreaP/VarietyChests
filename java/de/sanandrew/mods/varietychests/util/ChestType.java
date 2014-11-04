@@ -6,8 +6,8 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.util;
 
-import de.sanandrew.core.manpack.util.NbtTypes;
-import de.sanandrew.core.manpack.util.SAPUtils;
+import de.sanandrew.core.manpack.util.EnumNbtTypes;
+import de.sanandrew.core.manpack.util.helpers.SAPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class ChestType
     }
 
     public static ChestType getType(ItemStack stack) {
-        if( !stack.hasTagCompound() || !stack.getTagCompound().hasKey(VarietyChests.NBT_CHEST_TYPE, NbtTypes.NBT_STRING) ) {
+        if( !stack.hasTagCompound() || !stack.getTagCompound().hasKey(VarietyChests.NBT_CHEST_TYPE, EnumNbtTypes.NBT_STRING) ) {
             return NULL_TYPE;
         }
 

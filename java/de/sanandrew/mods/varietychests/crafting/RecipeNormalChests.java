@@ -6,7 +6,7 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.crafting;
 
-import de.sanandrew.core.manpack.util.SAPUtils;
+import de.sanandrew.core.manpack.util.helpers.SAPUtils;
 import de.sanandrew.mods.varietychests.util.ChestType;
 import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
