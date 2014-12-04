@@ -1,0 +1,8 @@
+[
+    {
+        "type": "local_mod", 
+        "mod": "VarietyChests", 
+        "path": "build/libs", 
+        "file": "VarietyChests*-deobf.jar"
+    }
+]

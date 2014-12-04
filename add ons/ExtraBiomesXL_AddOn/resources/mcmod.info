@@ -1,8 +1,8 @@
 [
 {
-  "modid": "varietychests",
-  "name": "Variety Chests",
-  "description": "A mod which adds new chests into Minecraft, which are purely asthetic.",
+  "modid": "exblvarchests",
+  "name": "Variety Chests AddOn for ExtraBiomesXL",
+  "description": "A mod which adds new chests into Minecraft, which are purely asthetic. An AddOn for ExtraBiomesXL.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
