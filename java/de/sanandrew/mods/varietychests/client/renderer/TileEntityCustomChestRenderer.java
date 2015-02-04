@@ -16,6 +16,7 @@ import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
@@ -34,7 +35,7 @@ public class TileEntityCustomChestRenderer
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partTicks) {
         this.renderChestAt((TileEntityCustomChest) tile, x, y, z, partTicks, 0);
-        if( tile.blockType == VarietyChests.customGlowingChest ) {
+        if( tile.blockType == VarietyChests.customGlowingChest || tile.blockType == VarietyChests.customTrapChest ) {
             this.renderChestAt((TileEntityCustomChest) tile, x, y, z, partTicks, 1);
         }
     }
@@ -71,7 +72,9 @@ public class TileEntityCustomChestRenderer
                     this.bindTexture(chest.getChestType().textureSng);
                 } else {
                     if( chest.blockType == VarietyChests.customGlowingChest ) {
-                        this.bindTexture(Textures.chest_glowmap_sng);
+                        this.bindTexture(Textures.CHEST_GLOWMAP_SNG);
+                    } else if( chest.blockType == VarietyChests.customTrapChest ) {
+                        this.bindTexture(Textures.CHEST_TRAPMAP_SNG);
                     }
                 }
 
@@ -82,7 +85,9 @@ public class TileEntityCustomChestRenderer
                     this.bindTexture(chest.getChestType().textureDbl);
                 } else {
                     if( chest.blockType == VarietyChests.customGlowingChest ) {
-                        this.bindTexture(Textures.chest_glowmap_dbl);
+                        this.bindTexture(Textures.CHEST_GLOWMAP_DBL);
+                    } else if( chest.blockType == VarietyChests.customTrapChest ) {
+                        this.bindTexture(Textures.CHEST_TRAPMAP_DBL);
                     }
                 }
             }
@@ -145,7 +150,7 @@ public class TileEntityCustomChestRenderer
             modelchest.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
             if( pass == 1 ) {
                 GL11.glEnable(GL11.GL_BLEND);
-                GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
                 modelchest.renderAll();
                 GL11.glDisable(GL11.GL_BLEND);
             } else {

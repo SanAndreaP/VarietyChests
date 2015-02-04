@@ -12,3 +12,13 @@ tile.varietychests:customGlowingChest.acacia.name=Coffre Brillant en Acacia
 tile.varietychests:customGlowingChest.darkoak.name=Coffre Brillant en Chêne Sombre
 tile.varietychests:customGlowingChest.original.name=Coffre Brillant
 tile.varietychests:customGlowingChest.NULL_CHEST.name=Vous n'êtes pas supposés voir ça écrit! Sérieusement, SVP, mettez-le ailleurs!
+
+tile.varietychests:customTrapChest.spruce.name=Coffre piégé en Pin
+tile.varietychests:customTrapChest.birch.name=Coffre piégé en Bouleau
+tile.varietychests:customTrapChest.jungle.name=Coffre piégé de la Jungle
+tile.varietychests:customTrapChest.acacia.name=Coffre piégé en Acacia
+tile.varietychests:customTrapChest.darkoak.name=Coffre piégé en Chêne Sombre
+tile.varietychests:customTrapChest.original.name=Coffre piégé
+tile.varietychests:customTrapChest.NULL_CHEST.name=Vous n'êtes pas supposés voir ça écrit! Sérieusement, SVP, mettez-le ailleurs!
+
+itemGroup.varietychests:vcm_tab=Variety Chests

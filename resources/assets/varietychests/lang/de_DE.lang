@@ -12,3 +12,13 @@ tile.varietychests:customGlowingChest.acacia.name=Leuchtende Akazienholztruhe
 tile.varietychests:customGlowingChest.darkoak.name=Leuchtende Schwarzeichenholztruhe
 tile.varietychests:customGlowingChest.original.name=Leuchtende Truhe
 tile.varietychests:customGlowingChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.
+
+tile.varietychests:customTrapChest.spruce.name=Redstone-Fichtenholztruhe
+tile.varietychests:customTrapChest.birch.name=Redstone-Birkenholztruhe
+tile.varietychests:customTrapChest.jungle.name=Redstone-Tropenholztruhe
+tile.varietychests:customTrapChest.acacia.name=Redstone-Akazienholztruhe
+tile.varietychests:customTrapChest.darkoak.name=Redstone-Schwarzeichenholztruhe
+tile.varietychests:customTrapChest.original.name=Redstonetruhe
+tile.varietychests:customTrapChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.
+
+itemGroup.varietychests:vcm_tab=Variety Chests

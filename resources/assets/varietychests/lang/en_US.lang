@@ -12,3 +12,13 @@ tile.varietychests:customGlowingChest.acacia.name=Glowing Acacia Chest
 tile.varietychests:customGlowingChest.darkoak.name=Glowing Dark Oak Chest
 tile.varietychests:customGlowingChest.original.name=Glowing Chest
 tile.varietychests:customGlowingChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.
+
+tile.varietychests:customTrapChest.spruce.name=Trapped Spruce Chest
+tile.varietychests:customTrapChest.birch.name=Trapped Birch Chest
+tile.varietychests:customTrapChest.jungle.name=Trapped Jungle Chest
+tile.varietychests:customTrapChest.acacia.name=Trapped Acacia Chest
+tile.varietychests:customTrapChest.darkoak.name=Trapped Dark Oak Chest
+tile.varietychests:customTrapChest.original.name=Trapped Chest
+tile.varietychests:customTrapChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.
+
+itemGroup.varietychests:vcm_tab=Variety Chests

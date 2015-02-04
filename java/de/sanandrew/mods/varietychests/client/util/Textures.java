@@ -14,6 +14,8 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class Textures
 {
-    public static final ResourceLocation chest_glowmap_sng = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/glow_engrave.png");
-    public static final ResourceLocation chest_glowmap_dbl = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/glow_engrave_double.png");
+    public static final ResourceLocation CHEST_GLOWMAP_SNG = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/glow_engrave.png");
+    public static final ResourceLocation CHEST_GLOWMAP_DBL = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/glow_engrave_double.png");
+    public static final ResourceLocation CHEST_TRAPMAP_SNG = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/trap_engrave.png");
+    public static final ResourceLocation CHEST_TRAPMAP_DBL = new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/trap_engrave_double.png");
 }

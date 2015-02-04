@@ -115,14 +115,14 @@ public class ItemBlockCustomChest
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return this.field_150939_a.getUnlocalizedName() + "." + ChestType.getType(stack).name;
+        return this.field_150939_a.getUnlocalizedName() + '.' + ChestType.getType(stack).name;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void getSubItems(Item item, CreativeTabs tab, List stacks) {
         for( String s : ChestType.getTypeNames() ) {
-            if( !(s.equals("original") && this.field_150939_a == VarietyChests.customChest) ) {
+            if( !(s.equals("original") && (this.field_150939_a == VarietyChests.customChest || this.field_150939_a == VarietyChests.customTrapChest) ) ) {
                 stacks.add(ChestType.getNewItemStackFromType(this.field_150939_a, s, 1));
             }
         }

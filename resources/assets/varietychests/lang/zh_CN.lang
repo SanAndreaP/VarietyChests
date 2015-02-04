@@ -12,3 +12,13 @@ tile.varietychests:customGlowingChest.acacia.name=荧光金合欢木箱子
 tile.varietychests:customGlowingChest.darkoak.name=荧光深色橡木箱子
 tile.varietychests:customGlowingChest.original.name=荧光箱子
 tile.varietychests:customGlowingChest.NULL_CHEST.name=你不可以使用这款箱子! 我是认真的, 请把它收回去.
+
+tile.varietychests:customTrapChest.spruce.name=陷阱云杉木箱子
+tile.varietychests:customTrapChest.birch.name=陷阱白桦木箱子
+tile.varietychests:customTrapChest.jungle.name=陷阱丛林木箱子
+tile.varietychests:customTrapChest.acacia.name=陷阱金合欢木箱子
+tile.varietychests:customTrapChest.darkoak.name=陷阱深色橡木箱子
+tile.varietychests:customTrapChest.original.name=陷阱箱子
+tile.varietychests:customTrapChest.NULL_CHEST.name=你不可以使用这款箱子! 我是认真的, 请把它收回去.
+
+itemGroup.varietychests:vcm_tab=Variety Chests

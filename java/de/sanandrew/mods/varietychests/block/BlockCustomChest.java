@@ -8,6 +8,7 @@ package de.sanandrew.mods.varietychests.block;
 
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
+import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.Entity;
@@ -37,6 +38,9 @@ public class BlockCustomChest
     public BlockCustomChest() {
         super(-1);
         this.setStepSound(Block.soundTypeWood);
+        this.setHardness(2.5F);
+        this.setHarvestLevel("axe", -1);
+        this.setCreativeTab(VarietyChests.creativeTab);
     }
 
     @Override
@@ -66,21 +70,15 @@ public class BlockCustomChest
         boolean isSameXPosType = world.getBlock(x + 1, y, z) == this && this.getChestType(world, x + 1, y, z).equals(myType);
 
         byte newMeta = 0;
-        int rotation = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int rotation = MathHelper.floor_double((placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if( rotation == 0 ) {
             newMeta = 2;
-        }
-
-        if( rotation == 1 ) {
+        } else if( rotation == 1 ) {
             newMeta = 5;
-        }
-
-        if( rotation == 2 ) {
+        } else if( rotation == 2 ) {
             newMeta = 3;
-        }
-
-        if( rotation == 3 ) {
+        } else if( rotation == 3 ) {
             newMeta = 4;
         }
 
@@ -191,9 +189,7 @@ public class BlockCustomChest
     }
 
     private static boolean isOcelotSittingOnChest(World world, int x, int y, int z) {
-        Iterator iterator = world.getEntitiesWithinAABB(EntityOcelot.class, AxisAlignedBB.getBoundingBox((double) x, (double) (y + 1), (double) z,
-                                                                                                         (double) (x + 1), (double) (y + 2), (double) (z + 1))
-        ).iterator();
+        Iterator iterator = world.getEntitiesWithinAABB(EntityOcelot.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1)).iterator();
 
         EntityOcelot entityocelot;
 
@@ -222,7 +218,7 @@ public class BlockCustomChest
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         return ChestType.getNewItemStackFromType(this, this.getChestType(world, x, y, z), 1);
     }
 

@@ -20,15 +20,15 @@ import java.util.Map.Entry;
 
 public class ChestType
 {
-    public static final ChestTypeList types = new ChestTypeList();
+    public static final ChestTypeList TYPES = new ChestTypeList();
     public static final ChestType NULL_TYPE = new ChestType("NULL_CHEST", new ResourceLocation("NULL_CHEST"), new ResourceLocation("NULL_CHEST"), null);
 
     public static void registerChestType(String name, ResourceLocation textureSingle, ResourceLocation textureDouble, ItemStack craftingItem) {
-        types.put(name, new ChestType(name, textureSingle, textureDouble, craftingItem));
+        TYPES.put(name, new ChestType(name, textureSingle, textureDouble, craftingItem));
     }
 
     public static ChestType getType(String name) {
-        ChestType type = types.get(name);
+        ChestType type = TYPES.get(name);
         if( type == null ) {
             return NULL_TYPE;
         }
@@ -37,7 +37,7 @@ public class ChestType
     }
 
     public static String[] getTypeNames() {
-        return types.keySet().toArray(new String[types.size()]);
+        return TYPES.keySet().toArray(new String[TYPES.size()]);
     }
 
     public static ChestType getType(ItemStack stack) {
@@ -49,8 +49,8 @@ public class ChestType
     }
 
     public static ChestType getTypeFromCraftingMaterial(ItemStack stack) {
-        for( ChestType type : types.values() ) {
-            if( SAPUtils.areStacksEqualWithWCV(stack, type.crfItem) ) {
+        for( ChestType type : TYPES.values() ) {
+            if( SAPUtils.areStacksEqual(stack, type.crfItem, false) ) {
                 return type;
             }
         }
@@ -82,6 +82,8 @@ public class ChestType
 
     private static class ChestTypeList
             extends HashMap<String, ChestType> {
+        private static final long serialVersionUID = -4333757139071524471L;
+
         private ChestTypeList() {
             super();
         }

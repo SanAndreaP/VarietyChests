@@ -19,11 +19,12 @@ public class ClientProxy
         extends CommonProxy
 {
     @Override
-    public void modPreInit() {
-        super.modPreInit();
+    public void preInit() {
+        super.preInit();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCustomChest.class, new TileEntityCustomChestRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(VarietyChests.customChest), new ItemRendererCustomChest());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(VarietyChests.customGlowingChest), new ItemRendererCustomChest());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(VarietyChests.customTrapChest), new ItemRendererCustomChest());
     }
 }
