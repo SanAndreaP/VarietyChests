@@ -10,6 +10,8 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import de.sanandrew.core.manpack.managers.SAPUpdateManager;
+import de.sanandrew.core.manpack.managers.SAPUpdateManager.Version;
 import de.sanandrew.mods.varietychests.util.ChestType;
 import extrabiomes.api.Stuff;
 import extrabiomes.module.fabrica.block.BlockCustomWood.BlockType;
@@ -17,17 +19,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 @Mod(modid = ExBiomesXlVarietyChests.MOD_ID, version = ExBiomesXlVarietyChests.VERSION, name = "Variety Chests EXBL AddOn",
-     dependencies = "required-after:varietychests@[1.1.1,);required-after:ExtrabiomesXL")
+     dependencies = "required-after:varietychests@[1.2.0,);required-after:ExtrabiomesXL")
 public final class ExBiomesXlVarietyChests
 {
     public static final String MOD_ID = "exblvarchests";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
 
     @Instance(MOD_ID)
     public static ExBiomesXlVarietyChests instance;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        SAPUpdateManager.createUpdateManager("Variety Chests EBXL", new Version(VERSION),
+                                             "https://raw.githubusercontent.com/SanAndreasP/VarietyChests/master/add%20ons/ExtraBiomesXL_AddOn/update.json",
+                                             "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2227062", event.getSourceFile()
+        );
+
         ChestType.registerChestType("redwood", new ResourceLocation(MOD_ID, "textures/entity/chest/redwood.png"),
                                     new ResourceLocation(MOD_ID, "textures/entity/chest/redwood_double.png"),
                                     new ItemStack(Stuff.planks.get(), 1, BlockType.REDWOOD.metadata())

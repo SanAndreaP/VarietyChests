@@ -22,6 +22,7 @@ import de.sanandrew.mods.varietychests.block.BlockCustomTrapChest;
 import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChests;
 import de.sanandrew.mods.varietychests.crafting.RecipeNormalChests;
 import de.sanandrew.mods.varietychests.crafting.RecipeTrapChests;
+import de.sanandrew.mods.varietychests.event.PopulatePostHandler;
 import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import net.minecraft.block.Block;
@@ -30,6 +31,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
@@ -83,6 +85,8 @@ public final class VarietyChests
         OreDictionary.registerOre("chestWood", customTrapChest);
 
         registerChestTypes();
+
+        MinecraftForge.EVENT_BUS.register(new PopulatePostHandler());
     }
 
     @EventHandler
