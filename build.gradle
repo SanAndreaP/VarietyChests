@@ -9,25 +9,31 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = 'SAPManPack-deobf'
+            url = 'https://github.com/SanAndreasP/SAPManagerPack/raw/master/maven-repo/'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'de.sanandrew.core.manpack:SAPManPack-deobf:1.7.10-2.4.0'
     }
 }
 
 apply plugin: 'forge'
+apply plugin: 'maven'
 
-version = "1.7.10-1.1.2"
+version = "1.7.10-1.2.0"
 group = "de.sanandrew.mods.varietychests"
 archivesBaseName = 'VarietyChests'
 
 minecraft {
-	version = "1.7.10-10.13.2.1232"
+	version = "1.7.10-10.13.2.1286"
     runDir = "eclipse"
 }
 
-dependencies {
-    compile fileTree(dir: 'build/dependencies', include: ['SAPManPack*-deobf.jar'])
+project.ext{
+    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/releases"
 }
 
 processResources {
@@ -52,7 +58,14 @@ sourceSets {
 }
 
 repositories {
-    mavenCentral()
+    maven {
+        name = 'SAPManPack-deobf'
+        url = 'https://github.com/SanAndreasP/SAPManagerPack/raw/master/maven-repo/'
+    }
+}
+
+dependencies {
+    compile 'de.sanandrew.core.manpack:SAPManPack-deobf:1.7.10-2.4.0'
 }
 
 tasks.withType(JavaCompile) {
@@ -61,19 +74,37 @@ tasks.withType(JavaCompile) {
 }
 
 task sourceJar(type: Jar) {
+    classifier = 'src'
     from sourceSets.main.allSource
     appendix = 'src'
     archiveName = baseName + "-" + version + "-" + appendix + ".jar"
 }
 
 task deobfJar(type: Jar) {
+    classifier = 'deobf'
     from sourceSets.main.output
     appendix = 'deobf'
     archiveName = baseName + "-" + version + "-" + appendix + ".jar"
 }
 
+
+configurations {
+    mvnDeobfJar
+}
+
 artifacts {
-	archives deobfJar
-	archives sourceJar
-	archives jar
+    archives deobfJar
+    archives sourceJar
+    archives jar
+    mvnDeobfJar deobfJar
+}
+
+project.ext {
+    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/"
+}
+
+uploadMvnDeobfJar {
+    repositories.mavenDeployer {
+        repository(url: project.releaseRepoUrl)
+    }
 }

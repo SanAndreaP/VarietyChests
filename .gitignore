@@ -11,3 +11,6 @@
 hs_err_pid*
 .gradle/
 add ons/ExtraBiomesXL_AddOn/lib/
+.idea/
+eclipse/
+VarietyChests.iml
