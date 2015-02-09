@@ -6,6 +6,7 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.event;
 
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import de.sanandrew.mods.varietychests.util.ChestType;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class PopulatePostHandler
 {
-    @SubscribeEvent
+    @SubscribeEvent(priority=EventPriority.LOWEST)
     @SuppressWarnings("unchecked")
     public void onChunkPopulatePost(PopulateChunkEvent.Post event) {
         if( !event.world.isRemote ) {
