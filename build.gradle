@@ -52,6 +52,7 @@ processResources {
 
 sourceSets {
     main {
+		output.resourcesDir = output.classesDir
         java { srcDir 'java' }
         resources { srcDir 'resources' }
     }
@@ -68,10 +69,8 @@ dependencies {
     compile 'de.sanandrew.core.manpack:SAPManPack-deobf:1.7.10-2.4.0'
 }
 
-tasks.withType(JavaCompile) {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
-}
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 task sourceJar(type: Jar) {
     classifier = 'src'
@@ -101,6 +100,12 @@ artifacts {
 
 project.ext {
     releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/"
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: project.releaseRepoUrl)
+    }
 }
 
 uploadMvnDeobfJar {
