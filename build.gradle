@@ -16,24 +16,19 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'de.sanandrew.core.manpack:SAPManPack-deobf:1.7.10-2.4.0'
+        classpath 'de.sanandrew.core:SAPManagerPack:1.7.10-2.4.0-deobf'
     }
 }
 
 apply plugin: 'forge'
-apply plugin: 'maven'
 
 version = "1.7.10-1.2.0"
-group = "de.sanandrew.mods.varietychests"
+group = "de.sanandrew.mods"
 archivesBaseName = 'VarietyChests'
 
 minecraft {
 	version = "1.7.10-10.13.2.1286"
     runDir = "eclipse"
-}
-
-project.ext{
-    releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/releases"
 }
 
 processResources {
@@ -60,40 +55,51 @@ sourceSets {
 
 repositories {
     maven {
-        name = 'SAPManPack-deobf'
+        name = 'SAPManPack'
         url = 'https://github.com/SanAndreasP/SAPManagerPack/raw/master/maven-repo/'
     }
 }
 
 dependencies {
-    compile 'de.sanandrew.core.manpack:SAPManPack-deobf:1.7.10-2.4.0'
+    compile 'de.sanandrew.core:SAPManagerPack:1.7.10-2.4.0-deobf'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 task sourceJar(type: Jar) {
-    classifier = 'src'
-    from sourceSets.main.allSource
+    from sourceSets.main.java
+    appendix = 'src'
+    archiveName = "${baseName}-${version}-${appendix}.jar"
 }
 
 task deobfJar(type: Jar) {
-    classifier = 'deobf'
     from sourceSets.main.output
+    appendix = 'deobf'
+    archiveName = "${baseName}-${version}-${appendix}.jar"
+}
+
+configurations {
+    deployDev
 }
 
 artifacts {
     archives deobfJar
     archives sourceJar
     archives jar
+    deployDev deobfJar
 }
 
 project.ext {
     releaseRepoUrl = "file://${project(':').projectDir}/maven-repo/"
 }
 
-uploadArchives {
+uploadDeployDev {
+    dependsOn("deobfJar")
+    configuration = configurations.deployDev
     repositories.mavenDeployer {
+        pom.artifactId = project.name
+        pom.version = project.version + '-deobf'
         repository(url: project.releaseRepoUrl)
     }
 }

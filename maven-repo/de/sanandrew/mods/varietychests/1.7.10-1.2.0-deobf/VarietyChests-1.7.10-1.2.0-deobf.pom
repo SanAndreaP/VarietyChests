@@ -2,9 +2,9 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.sanandrew.mods.varietychests</groupId>
+  <groupId>de.sanandrew.mods</groupId>
   <artifactId>VarietyChests</artifactId>
-  <version>1.7.10-1.2.0</version>
+  <version>1.7.10-1.2.0-deobf</version>
   <dependencies>
     <dependency>
       <groupId>de.sanandrew.core.manpack</groupId>
