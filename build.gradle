@@ -75,27 +75,17 @@ targetCompatibility = JavaVersion.VERSION_1_7
 task sourceJar(type: Jar) {
     classifier = 'src'
     from sourceSets.main.allSource
-    appendix = 'src'
-    archiveName = baseName + "-" + version + "-" + appendix + ".jar"
 }
 
 task deobfJar(type: Jar) {
     classifier = 'deobf'
     from sourceSets.main.output
-    appendix = 'deobf'
-    archiveName = baseName + "-" + version + "-" + appendix + ".jar"
-}
-
-
-configurations {
-    mvnDeobfJar
 }
 
 artifacts {
     archives deobfJar
     archives sourceJar
     archives jar
-    mvnDeobfJar deobfJar
 }
 
 project.ext {
@@ -103,12 +93,6 @@ project.ext {
 }
 
 uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: project.releaseRepoUrl)
-    }
-}
-
-uploadMvnDeobfJar {
     repositories.mavenDeployer {
         repository(url: project.releaseRepoUrl)
     }
