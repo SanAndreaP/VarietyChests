@@ -7,9 +7,9 @@
   <version>1.7.10-1.2.0-deobf</version>
   <dependencies>
     <dependency>
-      <groupId>de.sanandrew.core.manpack</groupId>
-      <artifactId>SAPManPack-deobf</artifactId>
-      <version>1.7.10-2.4.0</version>
+      <groupId>de.sanandrew.core</groupId>
+      <artifactId>SAPManagerPack</artifactId>
+      <version>1.7.10-2.4.0-deobf</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

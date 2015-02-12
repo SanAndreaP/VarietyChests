@@ -10,7 +10,7 @@ buildscript {
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
         maven {
-            name = 'SAPManPack-deobf'
+            name = 'SAPManagerPack'
             url = 'https://github.com/SanAndreasP/SAPManagerPack/raw/master/maven-repo/'
         }
     }
