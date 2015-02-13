@@ -28,7 +28,7 @@ group = "de.sanandrew.mods"
 archivesBaseName = 'VarietyChests'
 
 minecraft {
-	version = "1.7.10-10.13.2.1286"
+    version = "1.7.10-10.13.2.1286"
     runDir = "eclipse"
 }
 
@@ -48,7 +48,7 @@ processResources {
 
 sourceSets {
     main {
-		output.resourcesDir = output.classesDir
+        output.resourcesDir = output.classesDir
         java { srcDir 'java' }
         resources { srcDir 'resources' }
     }
