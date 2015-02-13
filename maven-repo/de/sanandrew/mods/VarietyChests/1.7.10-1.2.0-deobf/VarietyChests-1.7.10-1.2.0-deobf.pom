@@ -6,11 +6,11 @@
   <artifactId>VarietyChests</artifactId>
   <version>1.7.10-1.2.0-deobf</version>
   <dependencies>
-    <dependency>
+    <!--dependency>
       <groupId>de.sanandrew.core</groupId>
       <artifactId>SAPManagerPack</artifactId>
       <version>1.7.10-2.4.0-deobf</version>
       <scope>compile</scope>
-    </dependency>
+    </dependency-->
   </dependencies>
 </project>
