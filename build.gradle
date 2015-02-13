@@ -21,6 +21,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'war'
 
 version = "1.7.10-1.2.0"
 group = "de.sanandrew.mods"
@@ -95,7 +96,6 @@ project.ext {
 }
 
 uploadDeployDev {
-    dependsOn("deobfJar")
     configuration = configurations.deployDev
     repositories.mavenDeployer {
         pom.artifactId = project.name
