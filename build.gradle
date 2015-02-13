@@ -47,7 +47,6 @@ processResources {
 
 sourceSets {
     main {
-        output.resourcesDir = output.classesDir
         java { srcDir 'java' }
         resources { srcDir 'resources' }
     }
@@ -95,7 +94,6 @@ project.ext {
 }
 
 uploadDeployDev {
-    configuration = configurations.deployDev
     repositories.mavenDeployer {
         pom.artifactId = project.name
         pom.version = project.version + '-deobf'
