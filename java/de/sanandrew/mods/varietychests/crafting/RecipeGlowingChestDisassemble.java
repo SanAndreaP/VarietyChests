@@ -1,6 +1,6 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
@@ -15,46 +15,37 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-public class RecipeTrapChests
+public class RecipeGlowingChestDisassemble
         implements IRecipe
 {
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
-        boolean hasTripwire = false;
         boolean hasChest = false;
-
-        for( int slotId = 0; slotId < 9; slotId++) {
-            ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
-            if(slot != null) {
-                if( slot.getItem() == Item.getItemFromBlock(Blocks.tripwire_hook) ) {
-                    if( hasTripwire ) {
-                        return false;
-                    } else {
-                        hasTripwire = true;
-                    }
-                } else if( ChestType.getType(slot) != ChestType.NULL_TYPE ) {
-                    if( hasChest ) {
-                        return false;
-                    } else {
-                        hasChest = true;
-                    }
-                } else {
+        for( int i = 0; i < inventoryCrafting.getSizeInventory(); i++ ) {
+            ItemStack slotStack = inventoryCrafting.getStackInSlot(i);
+            if( hasChest ) {
+                if( slotStack != null ) {
                     return false;
                 }
+            } else if( slotStack != null && slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
+                hasChest = true;
             }
         }
 
-        return hasChest && hasTripwire;
+        return true;
     }
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
-        for( int slotId = 0; slotId < 9; slotId++) {
-            ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
-            if( slot != null ) {
-                if( ChestType.getType(slot) != ChestType.NULL_TYPE ) {
-                    return ChestType.getNewItemStackFromType(VarietyChests.customTrapChest, ChestType.getType(slot), 1);
+        for( int i = 0; i < inventoryCrafting.getSizeInventory(); i++ ) {
+            ItemStack slotStack = inventoryCrafting.getStackInSlot(i);
+            if( slotStack != null && slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
+                ChestType type = ChestType.getType(slotStack);
+                if( type == ChestType.ORIGINAL ) {
+                    return new ItemStack(Blocks.chest, 1);
                 }
+
+                return ChestType.getNewItemStackFromType(VarietyChests.customChest, type, 1);
             }
         }
 
@@ -63,7 +54,7 @@ public class RecipeTrapChests
 
     @Override
     public int getRecipeSize() {
-        return 9;
+        return 1;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class CreativeTabVarietyChests
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
         if( this.tabIcons == null ) {
-            String[] types = ChestType.getTypeNames();
+            ChestType[] types = ChestType.getTypes();
             this.tabIcons = new ItemStack[types.length];
             for( int i = 0; i < types.length; i++ ) {
                 this.tabIcons[i] = ChestType.getNewItemStackFromType(VarietyChests.customChest, types[i], 1);

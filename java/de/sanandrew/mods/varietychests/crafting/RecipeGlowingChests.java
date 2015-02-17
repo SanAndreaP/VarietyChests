@@ -53,9 +53,9 @@ public class RecipeGlowingChests
             ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
             if( slot != null ) {
                 if( slot.getItem() == Item.getItemFromBlock(Blocks.chest) ) {
-                    return ChestType.getNewItemStackFromType(VarietyChests.customGlowingChest, "original", 1);
+                    return ChestType.getNewItemStackFromType(VarietyChests.customGlowingChest, ChestType.ORIGINAL, 1);
                 } else if( ChestType.getType(slot) != ChestType.NULL_TYPE ) {
-                    return ChestType.getNewItemStackFromType(VarietyChests.customGlowingChest, ChestType.getType(slot).name, 1);
+                    return ChestType.getNewItemStackFromType(VarietyChests.customGlowingChest, ChestType.getType(slot), 1);
                 }
             }
         }

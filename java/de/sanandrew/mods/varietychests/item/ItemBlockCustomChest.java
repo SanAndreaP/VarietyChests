@@ -70,29 +70,29 @@ public class ItemBlockCustomChest
             }
         }
 
-        return this.canPlaceChestAt(world, placingX, placingY, placingZ, ChestType.getType(stack).name)
+        return this.canPlaceChestAt(world, placingX, placingY, placingZ, ChestType.getType(stack))
                 && super.onItemUse(stack, player, world, x, y, z, side, xOff, yOff, zOff);
     }
 
 
-    protected boolean canPlaceChestAt(World world, int x, int y, int z, String type) {
+    protected boolean canPlaceChestAt(World world, int x, int y, int z, ChestType type) {
         int typeCounter = 0;
 
         BlockCustomChest cChest = (BlockCustomChest) VarietyChests.customChest;
 
-        if( world.getBlock(x - 1, y, z) == this.field_150939_a && cChest.getChestType(world, x - 1, y, z).equals(type) ) {
+        if( world.getBlock(x - 1, y, z) == this.field_150939_a && cChest.getChestType(world, x - 1, y, z) == type ) {
             ++typeCounter;
         }
 
-        if( world.getBlock(x + 1, y, z) == this.field_150939_a && cChest.getChestType(world, x + 1, y, z).equals(type) ) {
+        if( world.getBlock(x + 1, y, z) == this.field_150939_a && cChest.getChestType(world, x + 1, y, z) == type ) {
             ++typeCounter;
         }
 
-        if( world.getBlock(x, y, z - 1) == this.field_150939_a && cChest.getChestType(world, x, y, z - 1).equals(type) ) {
+        if( world.getBlock(x, y, z - 1) == this.field_150939_a && cChest.getChestType(world, x, y, z - 1) == type ) {
             ++typeCounter;
         }
 
-        if( world.getBlock(x, y, z + 1) == this.field_150939_a && cChest.getChestType(world, x, y, z + 1).equals(type) ) {
+        if( world.getBlock(x, y, z + 1) == this.field_150939_a && cChest.getChestType(world, x, y, z + 1) == type ) {
             ++typeCounter;
         }
 
@@ -103,12 +103,12 @@ public class ItemBlockCustomChest
                 && !this.hasAdjancentChest(world, x, y, z + 1, cChest, type);
     }
 
-    private boolean hasAdjancentChest(World world, int x, int y, int z, BlockCustomChest chest, String type) {
-        boolean isCtrdSame = world.getBlock(x, y, z) == this.field_150939_a && chest.getChestType(world, x, y, z).equals(type);
-        boolean isZNegSame = world.getBlock(x, y, z - 1) == this.field_150939_a && chest.getChestType(world, x, y, z - 1).equals(type);
-        boolean isZPosSame = world.getBlock(x, y, z + 1) == this.field_150939_a && chest.getChestType(world, x, y, z + 1).equals(type);
-        boolean isXNegSame = world.getBlock(x - 1, y, z) == this.field_150939_a && chest.getChestType(world, x - 1, y, z).equals(type);
-        boolean isXPosSame = world.getBlock(x + 1, y, z) == this.field_150939_a && chest.getChestType(world, x + 1, y, z).equals(type);
+    private boolean hasAdjancentChest(World world, int x, int y, int z, BlockCustomChest chest, ChestType type) {
+        boolean isCtrdSame = world.getBlock(x, y, z) == this.field_150939_a && chest.getChestType(world, x, y, z) == type;
+        boolean isZNegSame = world.getBlock(x, y, z - 1) == this.field_150939_a && chest.getChestType(world, x, y, z - 1) == type;
+        boolean isZPosSame = world.getBlock(x, y, z + 1) == this.field_150939_a && chest.getChestType(world, x, y, z + 1) == type;
+        boolean isXNegSame = world.getBlock(x - 1, y, z) == this.field_150939_a && chest.getChestType(world, x - 1, y, z) == type;
+        boolean isXPosSame = world.getBlock(x + 1, y, z) == this.field_150939_a && chest.getChestType(world, x + 1, y, z) == type;
 
         return isCtrdSame && (isXNegSame || isXPosSame || isZNegSame || isZPosSame);
     }
@@ -121,10 +121,28 @@ public class ItemBlockCustomChest
     @Override
     @SuppressWarnings("unchecked")
     public void getSubItems(Item item, CreativeTabs tab, List stacks) {
-        for( String s : ChestType.getTypeNames() ) {
-            if( !(s.equals("original") && (this.field_150939_a == VarietyChests.customChest || this.field_150939_a == VarietyChests.customTrapChest) ) ) {
-                stacks.add(ChestType.getNewItemStackFromType(this.field_150939_a, s, 1));
+        for( ChestType type : ChestType.getTypes() ) {
+            if( type != ChestType.ORIGINAL || this.field_150939_a == VarietyChests.customGlowingChest ) {
+                stacks.add(ChestType.getNewItemStackFromType(this.field_150939_a, type, 1));
             }
         }
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack) {
+        if( stack != null && stack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
+            return true;
+        }
+
+        return super.hasContainerItem(stack);
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack) {
+        if( itemStack != null && itemStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
+            return new ItemStack(Blocks.glowstone, 1);
+        }
+
+        return super.getContainerItem(itemStack);
     }
 }

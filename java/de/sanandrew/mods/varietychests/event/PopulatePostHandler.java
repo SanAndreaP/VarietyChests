@@ -32,7 +32,7 @@ public class PopulatePostHandler
             for( TileEntity te : (Collection<TileEntity>) tileList.values() ) {
                 if( te.getClass().equals(TileEntityChest.class) ) {
                     TileEntityChest chest = (TileEntityChest) te;
-                    String[] typeNames = ChestType.getTypeNames();
+                    ChestType[] types = ChestType.getTypes();
                     int origDirection = event.world.getBlockMetadata(chest.xCoord, chest.yCoord, chest.zCoord);
 
                     // preemptively removing the chest TE, so it doesn't cause drops
@@ -42,7 +42,7 @@ public class PopulatePostHandler
 
                     // grab new TE instance and set type
                     TileEntityCustomChest custChest = (TileEntityCustomChest) event.world.getTileEntity(chest.xCoord, chest.yCoord, chest.zCoord);
-                    custChest.chestType = typeNames[event.rand.nextInt(typeNames.length)];
+                    custChest.chestType = types[event.rand.nextInt(types.length)];
 
                     // fill new inventory with the items the old chest had
                     for( int i = 0; i < chest.getSizeInventory(); i++ ) {

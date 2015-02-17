@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-public class RecipeNormalChests
+public class RecipePlainChests
         implements IRecipe
 {
     @Override
@@ -56,11 +56,11 @@ public class RecipeNormalChests
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
         ChestType type = ChestType.getTypeFromCraftingMaterial(inventoryCrafting.getStackInSlot(0));
 
-        if( type.name.equals("original") ) {
+        if( type == ChestType.ORIGINAL ) {
             return new ItemStack(Blocks.chest, 2);
         }
 
-        return ChestType.getNewItemStackFromType(VarietyChests.customChest, type.name, 2);
+        return ChestType.getNewItemStackFromType(VarietyChests.customChest, type, 2);
     }
 
     @Override

@@ -20,7 +20,7 @@ import net.minecraft.util.AxisAlignedBB;
 public class TileEntityCustomChest
         extends TileEntityChest
 {
-    public String chestType = ChestType.NULL_TYPE.name;
+    public ChestType chestType = ChestType.NULL_TYPE;
 
     public TileEntityCustomChest() {
     }
@@ -29,26 +29,26 @@ public class TileEntityCustomChest
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
-        nbt.setString("type", this.chestType);
+        nbt.setString("type", this.chestType.name);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
 
-        this.chestType = nbt.getString("type");
+        this.chestType = ChestType.getType(nbt.getString("type"));
     }
 
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("type", this.chestType);
+        nbt.setString("type", this.chestType.name);
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        this.chestType = pkt.func_148857_g().getString("type");
+        this.chestType = ChestType.getType(pkt.func_148857_g().getString("type"));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class TileEntityCustomChest
     }
 
     public ChestType getChestType() {
-        return ChestType.getType(this.chestType);
+        return this.chestType;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class TileEntityCustomChest
             return false;
         } else {
             Block block = this.worldObj.getBlock(x, y, z);
-            return block instanceof BlockCustomChest && block == this.getBlockType() && ((BlockCustomChest) block).getChestType(this.worldObj, x, y, z).equals(this.chestType);
+            return block instanceof BlockCustomChest && block == this.getBlockType() && ((BlockCustomChest) block).getChestType(this.worldObj, x, y, z) == this.chestType;
         }
     }
 

@@ -45,7 +45,7 @@ public class ItemRendererCustomChest
         }
 
         this.chest.blockType = Block.getBlockFromItem(stack.getItem());
-        this.chest.chestType = ChestType.getType(stack).name;
+        this.chest.chestType = ChestType.getType(stack);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.chest, 0.0D, 0.0D, 0.0D, 0.0F);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

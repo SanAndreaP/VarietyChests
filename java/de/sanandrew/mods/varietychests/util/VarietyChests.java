@@ -16,11 +16,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import de.sanandrew.core.manpack.managers.SAPUpdateManager;
 import de.sanandrew.core.manpack.managers.SAPUpdateManager.Version;
 import de.sanandrew.core.manpack.util.helpers.SAPUtils;
+import de.sanandrew.core.manpack.util.modcompatibility.ModInitHelperInst;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
 import de.sanandrew.mods.varietychests.block.BlockCustomGlowingChest;
 import de.sanandrew.mods.varietychests.block.BlockCustomTrapChest;
+import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChestDisassemble;
 import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChests;
-import de.sanandrew.mods.varietychests.crafting.RecipeNormalChests;
+import de.sanandrew.mods.varietychests.crafting.RecipePlainChests;
 import de.sanandrew.mods.varietychests.crafting.RecipeTrapChests;
 import de.sanandrew.mods.varietychests.event.PopulatePostHandler;
 import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
@@ -50,6 +52,8 @@ public final class VarietyChests
     public static Block customGlowingChest;
     public static Block customTrapChest;
 
+    private ModInitHelperInst neiIntegrationHelper;
+
     public static CreativeTabs creativeTab = new CreativeTabVarietyChests();
 
     @Instance(MOD_ID)
@@ -62,6 +66,8 @@ public final class VarietyChests
     public void preInit(FMLPreInitializationEvent event) {
         SAPUpdateManager.createUpdateManager("Variety Chests", new Version(VERSION), "https://raw.githubusercontent.com/SanAndreasP/VarietyChests/master/update.json",
                                              "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2227062", event.getSourceFile());
+
+        neiIntegrationHelper = ModInitHelperInst.loadWhenModAvailable("NotEnoughItems", "de.sanandrew.mods.varietychests.util.modcompat.nei.NeiIntegration");
 
         customChest = new BlockCustomChest();
         customChest.setBlockName(MOD_ID + ":customChest");
@@ -87,17 +93,21 @@ public final class VarietyChests
         registerChestTypes();
 
         MinecraftForge.EVENT_BUS.register(new PopulatePostHandler());
+
+        neiIntegrationHelper.preInitialize();
     }
 
     @EventHandler
     @SuppressWarnings("unchecked")
     public void postInit(FMLPostInitializationEvent event) {
-        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest", RecipeNormalChests.class, Category.SHAPED, "after:minecraft:shaped");
+        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest", RecipePlainChests.class, Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_glowcchest", RecipeGlowingChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_glowcchest_disasmb", RecipeGlowingChestDisassemble.class, Category.SHAPELESS, "after:minecraft:shapeless");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_trapcchest", RecipeTrapChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
 
-        CraftingManager.getInstance().getRecipeList().add(new RecipeNormalChests());
+        CraftingManager.getInstance().getRecipeList().add(new RecipePlainChests());
         CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChests());
+        CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChestDisassemble());
         CraftingManager.getInstance().getRecipeList().add(new RecipeTrapChests());
     }
 
@@ -121,10 +131,6 @@ public final class VarietyChests
         ChestType.registerChestType("darkoak", new ResourceLocation(MOD_ID, "textures/entity/chest/darkoak.png"),
                                     new ResourceLocation(MOD_ID, "textures/entity/chest/darkoak_double.png"),
                                     new ItemStack(Blocks.planks, 1, 5)
-        );
-        ChestType.registerChestType("original", new ResourceLocation("minecraft", "textures/entity/chest/normal.png"),
-                                    new ResourceLocation("minecraft", "textures/entity/chest/normal_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 0)
         );
     }
 }

@@ -45,15 +45,15 @@ public class BlockCustomChest
 
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
-        String myType = this.getChestType(blockAccess, x, y, z);
+        ChestType myType = this.getChestType(blockAccess, x, y, z);
 
-        if( blockAccess.getBlock(x, y, z - 1) == this && this.getChestType(blockAccess, x, y, z - 1).equals(myType) ) {
+        if( blockAccess.getBlock(x, y, z - 1) == this && this.getChestType(blockAccess, x, y, z - 1) == myType ) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-        } else if( blockAccess.getBlock(x, y, z + 1) == this && this.getChestType(blockAccess, x, y, z + 1).equals(myType) ) {
+        } else if( blockAccess.getBlock(x, y, z + 1) == this && this.getChestType(blockAccess, x, y, z + 1) == myType ) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-        } else if( blockAccess.getBlock(x - 1, y, z) == this && this.getChestType(blockAccess, x - 1, y, z).equals(myType) ) {
+        } else if( blockAccess.getBlock(x - 1, y, z) == this && this.getChestType(blockAccess, x - 1, y, z) == myType ) {
             this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-        } else if( blockAccess.getBlock(x + 1, y, z) == this && this.getChestType(blockAccess, x + 1, y, z).equals(myType) ) {
+        } else if( blockAccess.getBlock(x + 1, y, z) == this && this.getChestType(blockAccess, x + 1, y, z) == myType ) {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
         } else {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
@@ -62,12 +62,12 @@ public class BlockCustomChest
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
-        String myType = ChestType.getType(stack).name;
+        ChestType myType = ChestType.getType(stack);
 
-        boolean isSameZNegType = world.getBlock(x, y, z - 1) == this && this.getChestType(world, x, y, z - 1).equals(myType);
-        boolean isSameZPosType = world.getBlock(x, y, z + 1) == this && this.getChestType(world, x, y, z + 1).equals(myType);
-        boolean isSameXNegType = world.getBlock(x - 1, y, z) == this && this.getChestType(world, x - 1, y, z).equals(myType);
-        boolean isSameXPosType = world.getBlock(x + 1, y, z) == this && this.getChestType(world, x + 1, y, z).equals(myType);
+        boolean isSameZNegType = world.getBlock(x, y, z - 1) == this && this.getChestType(world, x, y, z - 1) == myType;
+        boolean isSameZPosType = world.getBlock(x, y, z + 1) == this && this.getChestType(world, x, y, z + 1) == myType;
+        boolean isSameXNegType = world.getBlock(x - 1, y, z) == this && this.getChestType(world, x - 1, y, z) == myType;
+        boolean isSameXPosType = world.getBlock(x + 1, y, z) == this && this.getChestType(world, x + 1, y, z) == myType;
 
         byte newMeta = 0;
         int rotation = MathHelper.floor_double((placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
@@ -114,7 +114,7 @@ public class BlockCustomChest
             }
         }
 
-        ((TileEntityCustomChest) world.getTileEntity(x, y, z)).chestType = ChestType.getType(stack).name;
+        ((TileEntityCustomChest) world.getTileEntity(x, y, z)).chestType = ChestType.getType(stack);
 
         if( stack.hasDisplayName() ) {
             ((TileEntityCustomChest) world.getTileEntity(x, y, z)).func_145976_a(stack.getDisplayName());
@@ -153,11 +153,11 @@ public class BlockCustomChest
     public IInventory func_149951_m(World world, int x, int y, int z) {
         IInventory object = (IInventory) world.getTileEntity(x, y, z);
 
-        String myType = this.getChestType(world, x, y, z);
-        boolean isZNegTypeIdent = world.getBlock(x, y, z - 1) == this && this.getChestType(world, x, y, z - 1).equals(myType);
-        boolean isZPosTypeIdent = world.getBlock(x, y, z + 1) == this && this.getChestType(world, x, y, z + 1).equals(myType);
-        boolean isXNegTypeIdent = world.getBlock(x - 1, y, z) == this && this.getChestType(world, x - 1, y, z).equals(myType);
-        boolean isXPosTypeIdent = world.getBlock(x + 1, y, z) == this && this.getChestType(world, x + 1, y, z).equals(myType);
+        ChestType myType = this.getChestType(world, x, y, z);
+        boolean isZNegTypeIdent = world.getBlock(x, y, z - 1) == this && this.getChestType(world, x, y, z - 1) == myType;
+        boolean isZPosTypeIdent = world.getBlock(x, y, z + 1) == this && this.getChestType(world, x, y, z + 1) == myType;
+        boolean isXNegTypeIdent = world.getBlock(x - 1, y, z) == this && this.getChestType(world, x - 1, y, z) == myType;
+        boolean isXPosTypeIdent = world.getBlock(x + 1, y, z) == this && this.getChestType(world, x + 1, y, z) == myType;
 
         if( object == null ) {
             return null;
@@ -222,12 +222,12 @@ public class BlockCustomChest
         return ChestType.getNewItemStackFromType(this, this.getChestType(world, x, y, z), 1);
     }
 
-    public String getChestType(IBlockAccess blockAccess, int x, int y, int z) {
+    public ChestType getChestType(IBlockAccess blockAccess, int x, int y, int z) {
         TileEntity te = blockAccess.getTileEntity(x, y, z);
         if( te instanceof TileEntityCustomChest ) {
             return ((TileEntityCustomChest) te).chestType;
         }
 
-        return ChestType.NULL_TYPE.name;
+        return ChestType.NULL_TYPE;
     }
 }
