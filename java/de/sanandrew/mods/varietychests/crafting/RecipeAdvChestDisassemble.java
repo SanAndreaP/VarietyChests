@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-public class RecipeGlowingChestDisassemble
+public class RecipeAdvChestDisassemble
         implements IRecipe
 {
     @Override
@@ -27,8 +27,14 @@ public class RecipeGlowingChestDisassemble
                 if( slotStack != null ) {
                     return false;
                 }
-            } else if( slotStack != null && slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
-                hasChest = true;
+            } else if( slotStack != null ) {
+                if( slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
+                    hasChest = true;
+                } else if( slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customTrapChest)
+                           || slotStack.getItem() == Item.getItemFromBlock(Blocks.trapped_chest) )
+                {
+                    hasChest = true;
+                }
             }
         }
 
@@ -39,13 +45,19 @@ public class RecipeGlowingChestDisassemble
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
         for( int i = 0; i < inventoryCrafting.getSizeInventory(); i++ ) {
             ItemStack slotStack = inventoryCrafting.getStackInSlot(i);
-            if( slotStack != null && slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
-                ChestType type = ChestType.getType(slotStack);
-                if( type == ChestType.ORIGINAL ) {
+            if( slotStack != null ) {
+                if( slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest)
+                    || slotStack.getItem() == Item.getItemFromBlock(VarietyChests.customTrapChest) )
+                {
+                    ChestType type = ChestType.getType(slotStack);
+                    if( type == ChestType.ORIGINAL ) {
+                        return new ItemStack(Blocks.chest, 1);
+                    }
+
+                    return ChestType.getNewItemStackFromType(VarietyChests.customChest, type, 1);
+                } else if( slotStack.getItem() == Item.getItemFromBlock(Blocks.trapped_chest) ) {
                     return new ItemStack(Blocks.chest, 1);
                 }
-
-                return ChestType.getNewItemStackFromType(VarietyChests.customChest, type, 1);
             }
         }
 

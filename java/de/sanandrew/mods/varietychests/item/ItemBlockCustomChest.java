@@ -127,22 +127,4 @@ public class ItemBlockCustomChest
             }
         }
     }
-
-    @Override
-    public boolean hasContainerItem(ItemStack stack) {
-        if( stack != null && stack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
-            return true;
-        }
-
-        return super.hasContainerItem(stack);
-    }
-
-    @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
-        if( itemStack != null && itemStack.getItem() == Item.getItemFromBlock(VarietyChests.customGlowingChest) ) {
-            return new ItemStack(Blocks.glowstone, 1);
-        }
-
-        return super.getContainerItem(itemStack);
-    }
 }

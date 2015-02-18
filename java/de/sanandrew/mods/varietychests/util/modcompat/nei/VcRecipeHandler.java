@@ -9,6 +9,7 @@ package de.sanandrew.mods.varietychests.util.modcompat.nei;
 
 import codechicken.nei.recipe.ShapedRecipeHandler;
 import de.sanandrew.core.manpack.util.helpers.SAPUtils;
+import de.sanandrew.mods.varietychests.util.VarietyChests;
 import net.minecraft.item.ItemStack;
 
 public class VcRecipeHandler
@@ -51,6 +52,6 @@ public class VcRecipeHandler
 
     @Override
     public String getRecipeName() {
-        return SAPUtils.translate("varietychests:recipe.shaped");
+        return SAPUtils.translate(VarietyChests.MOD_ID + ":recipe.shaped");
     }
 }

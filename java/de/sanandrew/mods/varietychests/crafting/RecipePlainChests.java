@@ -22,7 +22,7 @@ public class RecipePlainChests
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
         ItemStack wood = null;
-        for( int slotId = 0; slotId < 9; slotId++ ) {
+        for( int slotId = 0; slotId < inventoryCrafting.getSizeInventory(); slotId++ ) {
             ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
             if( slot == null ) {
                 return false;

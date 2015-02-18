@@ -6,6 +6,7 @@
  *******************************************************************************************************************/
 package de.sanandrew.mods.varietychests.util;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,10 +21,11 @@ import de.sanandrew.core.manpack.util.modcompatibility.ModInitHelperInst;
 import de.sanandrew.mods.varietychests.block.BlockCustomChest;
 import de.sanandrew.mods.varietychests.block.BlockCustomGlowingChest;
 import de.sanandrew.mods.varietychests.block.BlockCustomTrapChest;
-import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChestDisassemble;
+import de.sanandrew.mods.varietychests.crafting.RecipeAdvChestDisassemble;
 import de.sanandrew.mods.varietychests.crafting.RecipeGlowingChests;
 import de.sanandrew.mods.varietychests.crafting.RecipePlainChests;
 import de.sanandrew.mods.varietychests.crafting.RecipeTrapChests;
+import de.sanandrew.mods.varietychests.event.ItemCraftedHandler;
 import de.sanandrew.mods.varietychests.event.PopulatePostHandler;
 import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
@@ -93,6 +95,7 @@ public final class VarietyChests
         registerChestTypes();
 
         MinecraftForge.EVENT_BUS.register(new PopulatePostHandler());
+        FMLCommonHandler.instance().bus().register(new ItemCraftedHandler());
 
         neiIntegrationHelper.preInitialize();
     }
@@ -102,12 +105,12 @@ public final class VarietyChests
     public void postInit(FMLPostInitializationEvent event) {
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest", RecipePlainChests.class, Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_glowcchest", RecipeGlowingChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
-        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_glowcchest_disasmb", RecipeGlowingChestDisassemble.class, Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest_disasmb", RecipeAdvChestDisassemble.class, Category.SHAPELESS, "after:minecraft:shapeless");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_trapcchest", RecipeTrapChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
 
         CraftingManager.getInstance().getRecipeList().add(new RecipePlainChests());
         CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChests());
-        CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChestDisassemble());
+        CraftingManager.getInstance().getRecipeList().add(new RecipeAdvChestDisassemble());
         CraftingManager.getInstance().getRecipeList().add(new RecipeTrapChests());
     }
 
