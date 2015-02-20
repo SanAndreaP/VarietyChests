@@ -31,19 +31,18 @@ import de.sanandrew.mods.varietychests.item.ItemBlockCustomChest;
 import de.sanandrew.mods.varietychests.tileentity.TileEntityCustomChest;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
 
-@Mod(modid = VarietyChests.MOD_ID, version = VarietyChests.VERSION, name = "Variety Chests", dependencies = "required-after:sapmanpack@[2.4.0,)")
+@Mod(modid = VarietyChests.MOD_ID, version = VarietyChests.VERSION, name = "Variety Chests", dependencies = VarietyChests.MOD_DEPS)
 public final class VarietyChests
 {
     public static final String MOD_ID = "varietychests";
+    public static final String MOD_DEPS = "required-after:sapmanpack@[2.4.0,);after:ExtrabiomesXL;after:NotEnoughItems";
     public static final String VERSION = "1.2.0";
     public static final String PROXY_CLIENT = "de.sanandrew.mods.varietychests.client.util.ClientProxy";
     public static final String PROXY_SERVER = "de.sanandrew.mods.varietychests.util.CommonProxy";
@@ -54,9 +53,7 @@ public final class VarietyChests
     public static Block customGlowingChest;
     public static Block customTrapChest;
 
-    private ModInitHelperInst neiIntegrationHelper;
-
-    public static CreativeTabs creativeTab = new CreativeTabVarietyChests();
+    public static CreativeTabs creativeTab = new VcCreativeTab();
 
     @Instance(MOD_ID)
     public static VarietyChests instance;
@@ -66,10 +63,11 @@ public final class VarietyChests
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        VcConfig.configuration = new Configuration(event.getSuggestedConfigurationFile(), "1.0");
+        VcConfig.syncConfig();
+
         SAPUpdateManager.createUpdateManager("Variety Chests", new Version(VERSION), "https://raw.githubusercontent.com/SanAndreasP/VarietyChests/master/update.json",
                                              "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2227062", event.getSourceFile());
-
-        neiIntegrationHelper = ModInitHelperInst.loadWhenModAvailable("NotEnoughItems", "de.sanandrew.mods.varietychests.util.modcompat.nei.NeiIntegration");
 
         customChest = new BlockCustomChest();
         customChest.setBlockName(MOD_ID + ":customChest");
@@ -89,15 +87,22 @@ public final class VarietyChests
         proxy.preInit();
 
         OreDictionary.registerOre("chestWood", customChest);
-        OreDictionary.registerOre("chestWood", customGlowingChest);
-        OreDictionary.registerOre("chestWood", customTrapChest);
 
-        registerChestTypes();
+        ChestType.registerDefaultTypes();
 
         MinecraftForge.EVENT_BUS.register(new PopulatePostHandler());
-        FMLCommonHandler.instance().bus().register(new ItemCraftedHandler());
 
-        neiIntegrationHelper.preInitialize();
+        if( VcConfig.disassembleRecipes ) {
+            FMLCommonHandler.instance().bus().register(new ItemCraftedHandler());
+        }
+
+        if( VcConfig.neiCraftingCompat ) {
+            ModInitHelperInst.loadWhenModAvailable("NotEnoughItems", "de.sanandrew.mods.varietychests.util.modcompat.nei.NeiIntegration").preInitialize();
+        }
+
+        if( VcConfig.extraBiomesXlTypes ) {
+            ModInitHelperInst.loadWhenModAvailable("ExtrabiomesXL", "de.sanandrew.mods.varietychests.util.modcompat.ebxl.EbxlIntegration").preInitialize();
+        }
     }
 
     @EventHandler
@@ -105,35 +110,14 @@ public final class VarietyChests
     public void postInit(FMLPostInitializationEvent event) {
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest", RecipePlainChests.class, Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_glowcchest", RecipeGlowingChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
-        RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest_disasmb", RecipeAdvChestDisassemble.class, Category.SHAPELESS, "after:minecraft:shapeless");
         RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_trapcchest", RecipeTrapChests.class, Category.SHAPELESS, "after:minecraft:shapeless");
-
         CraftingManager.getInstance().getRecipeList().add(new RecipePlainChests());
         CraftingManager.getInstance().getRecipeList().add(new RecipeGlowingChests());
-        CraftingManager.getInstance().getRecipeList().add(new RecipeAdvChestDisassemble());
         CraftingManager.getInstance().getRecipeList().add(new RecipeTrapChests());
-    }
 
-    private static void registerChestTypes() {
-        ChestType.registerChestType("spruce", new ResourceLocation(MOD_ID, "textures/entity/chest/spruce.png"),
-                                    new ResourceLocation(MOD_ID, "textures/entity/chest/spruce_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 1)
-        );
-        ChestType.registerChestType("birch", new ResourceLocation(MOD_ID, "textures/entity/chest/birch.png"),
-                                    new ResourceLocation(MOD_ID, "textures/entity/chest/birch_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 2)
-        );
-        ChestType.registerChestType("jungle", new ResourceLocation(MOD_ID, "textures/entity/chest/jungle.png"),
-                                    new ResourceLocation(MOD_ID, "textures/entity/chest/jungle_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 3)
-        );
-        ChestType.registerChestType("acacia", new ResourceLocation(MOD_ID, "textures/entity/chest/acacia.png"),
-                                    new ResourceLocation(MOD_ID, "textures/entity/chest/acacia_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 4)
-        );
-        ChestType.registerChestType("darkoak", new ResourceLocation(MOD_ID, "textures/entity/chest/darkoak.png"),
-                                    new ResourceLocation(MOD_ID, "textures/entity/chest/darkoak_double.png"),
-                                    new ItemStack(Blocks.planks, 1, 5)
-        );
+        if( VcConfig.disassembleRecipes ) {
+            RecipeSorter.register(VarietyChests.MOD_ID + ":recipe_cchest_disasmb", RecipeAdvChestDisassemble.class, Category.SHAPELESS, "after:minecraft:shapeless");
+            CraftingManager.getInstance().getRecipeList().add(new RecipeAdvChestDisassemble());
+        }
     }
 }

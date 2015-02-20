@@ -22,3 +22,5 @@ tile.varietychests:customTrapChest.original.name=Trapped Chest
 tile.varietychests:customTrapChest.NULL_CHEST.name=You are not supposed to have this type! Srsly, plz put it away.
 
 itemGroup.varietychests:vcm_tab=Variety Chests
+
+varietychests:nei.recipes=Variety Chests

@@ -20,12 +20,16 @@ public class VcRecipeHandler
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         NeiRecipesPlainChests.loadCraftingRecipes(this, result);
+        NeiRecipesGlowChests.loadCraftingRecipes(this, result);
+        NeiRecipesTrapChests.loadCraftingRecipes(this, result);
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if( outputId.equals("crafting") && getClass() == VcRecipeHandler.class ) {
             NeiRecipesPlainChests.loadAllCraftingRecipes(this);
+            NeiRecipesGlowChests.loadAllCraftingRecipes(this);
+            NeiRecipesTrapChests.loadAllCraftingRecipes(this);
         } else {
             super.loadCraftingRecipes(outputId, results);
         }
@@ -34,24 +38,23 @@ public class VcRecipeHandler
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         NeiRecipesPlainChests.loadUsageRecipes(this, ingredient);
+        NeiRecipesGlowChests.loadUsageRecipes(this, ingredient);
+        NeiRecipesTrapChests.loadUsageRecipes(this, ingredient);
     }
 
     @Override
     public void loadUsageRecipes(String inputId, Object... ingredients) {
         if( inputId.equals("item") && getClass() == VcRecipeHandler.class ) {
             NeiRecipesPlainChests.loadUsageRecipes(this, (ItemStack) ingredients[0]);
+            NeiRecipesGlowChests.loadUsageRecipes(this, (ItemStack) ingredients[0]);
+            NeiRecipesTrapChests.loadUsageRecipes(this, (ItemStack) ingredients[0]);
         } else {
             super.loadUsageRecipes(inputId, ingredients);
         }
     }
 
     @Override
-    public boolean isRecipe2x2(int recipe) {
-        return false;
-    }
-
-    @Override
     public String getRecipeName() {
-        return SAPUtils.translate(VarietyChests.MOD_ID + ":recipe.shaped");
+        return SAPUtils.translate(VarietyChests.MOD_ID + ":nei.recipes");
     }
 }

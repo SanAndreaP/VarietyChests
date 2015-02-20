@@ -21,8 +21,8 @@ import java.util.Map;
 
 public class PopulatePostHandler
 {
-    @SubscribeEvent(priority=EventPriority.LOWEST)
     @SuppressWarnings("unchecked")
+    @SubscribeEvent(priority=EventPriority.LOWEST)
     public void onChunkPopulatePost(PopulateChunkEvent.Post event) {
         if( !event.world.isRemote ) {
             // copy chunk TE list (it gets modified during iteration, causing ConcurrentModificationExceptions w/o copying)

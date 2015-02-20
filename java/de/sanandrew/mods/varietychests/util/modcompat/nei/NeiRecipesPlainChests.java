@@ -40,7 +40,7 @@ public class NeiRecipesPlainChests
             mutations.add(new ItemStack(Blocks.chest));
 
             for( ChestType type : ChestType.getTypes() ) {
-                if( type.crfItem != null && type != ChestType.NULL_TYPE && !type.name.equals("original") ) {
+                if( type.crfItem != null && type != ChestType.NULL_TYPE && type != ChestType.ORIGINAL ) {
                     mutations.add(ChestType.getNewItemStackFromType(VarietyChests.customChest, type, 1));
                 }
             }
@@ -90,7 +90,7 @@ public class NeiRecipesPlainChests
             recipe[4] = new ItemStack(Blocks.chest);
 
             for( ChestType type : ChestType.getTypes() ) {
-                if( type.crfItem != null && type != ChestType.NULL_TYPE && !type.name.equals("original") ) {
+                if( type.crfItem != null && type != ChestType.NULL_TYPE && type != ChestType.ORIGINAL ) {
                     for( int i = 0; i < 9; i++ ) {
                         if( i != 4 ) {
                             recipe[i] = type.crfItem.copy();
@@ -121,7 +121,7 @@ public class NeiRecipesPlainChests
                     mutations.add(new ItemStack(Blocks.chest));
 
                     for( ChestType typeIngredient : ChestType.getTypes() ) {
-                        if( typeIngredient.crfItem != null && typeIngredient != ChestType.NULL_TYPE && !typeIngredient.name.equals("original") ) {
+                        if( typeIngredient.crfItem != null && typeIngredient != ChestType.NULL_TYPE && typeIngredient != ChestType.ORIGINAL ) {
                             mutations.add(ChestType.getNewItemStackFromType(VarietyChests.customChest, typeIngredient, 1));
                         }
                     }

@@ -24,8 +24,8 @@ public class ChestType
     public static final ChestTypeList TYPES = new ChestTypeList();
     public static final ChestType NULL_TYPE = new ChestType("NULL_CHEST", new ResourceLocation("NULL_CHEST"), new ResourceLocation("NULL_CHEST"), null);
     public static final ChestType ORIGINAL = registerChestType("original", new ResourceLocation("minecraft", "textures/entity/chest/normal.png"),
-                                                           new ResourceLocation("minecraft", "textures/entity/chest/normal_double.png"),
-                                                           new ItemStack(Blocks.planks, 1, 0));
+                                                               new ResourceLocation("minecraft", "textures/entity/chest/normal_double.png"),
+                                                               new ItemStack(Blocks.planks, 1, 0));
 
     public static ChestType registerChestType(String name, ResourceLocation textureSingle, ResourceLocation textureDouble, ItemStack craftingItem) {
         ChestType newType = new ChestType(name, textureSingle, textureDouble, craftingItem);
@@ -78,6 +78,29 @@ public class ChestType
         return stack;
     }
 
+    public static void registerDefaultTypes() {
+        ChestType.registerChestType("spruce", new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/spruce.png"),
+                                    new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/spruce_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 1)
+        );
+        ChestType.registerChestType("birch", new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/birch.png"),
+                                    new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/birch_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 2)
+        );
+        ChestType.registerChestType("jungle", new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/jungle.png"),
+                                    new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/jungle_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 3)
+        );
+        ChestType.registerChestType("acacia", new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/acacia.png"),
+                                    new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/acacia_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 4)
+        );
+        ChestType.registerChestType("darkoak", new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/darkoak.png"),
+                                    new ResourceLocation(VarietyChests.MOD_ID, "textures/entity/chest/darkoak_double.png"),
+                                    new ItemStack(Blocks.planks, 1, 5)
+        );
+    }
+
     public final ResourceLocation textureSng;
     public final ResourceLocation textureDbl;
     public final String name;
@@ -90,8 +113,8 @@ public class ChestType
         this.crfItem = stack;
     }
 
-    private static class ChestTypeList
-            extends HashMap<String, ChestType> {
+    private static class ChestTypeList extends HashMap<String, ChestType>
+    {
         private static final long serialVersionUID = -4333757139071524471L;
 
         private ChestTypeList() {

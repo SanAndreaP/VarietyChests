@@ -12,12 +12,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class CreativeTabVarietyChests
+public class VcCreativeTab
         extends CreativeTabs
 {
     private ItemStack[] tabIcons;
 
-    public CreativeTabVarietyChests() {
+    public VcCreativeTab() {
         super(VarietyChests.MOD_ID + ":vcm_tab");
     }
 

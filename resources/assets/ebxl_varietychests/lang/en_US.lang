@@ -1,0 +1,29 @@
+tile.varietychests:customChest.redwood.name=Redwood Chest
+tile.varietychests:customChest.fir.name=Fir Chest
+tile.varietychests:customChest.acacia_exbl.name=Acacia Chest
+tile.varietychests:customChest.cypress.name=Cypress Chest
+tile.varietychests:customChest.japanesemaple.name=Japanese Maple Chest
+tile.varietychests:customChest.rainboweucalyptus.name=Rainbow Eucalyptus Chest
+tile.varietychests:customChest.autumn.name=Autumn Chest
+tile.varietychests:customChest.baldcypress.name=Bald Cypress Chest
+tile.varietychests:customChest.sakura.name=Sakura Chest
+
+tile.varietychests:customGlowingChest.redwood.name=Glowing Redwood Chest
+tile.varietychests:customGlowingChest.fir.name=Glowing Fir Chest
+tile.varietychests:customGlowingChest.acacia_exbl.name=Glowing Acacia Chest
+tile.varietychests:customGlowingChest.cypress.name=Glowing Cypress Chest
+tile.varietychests:customGlowingChest.japanesemaple.name=Glowing Japanese Maple Chest
+tile.varietychests:customGlowingChest.rainboweucalyptus.name=Glowing Rainbow Eucalyptus Chest
+tile.varietychests:customGlowingChest.autumn.name=Glowing Autumn Chest
+tile.varietychests:customGlowingChest.baldcypress.name=Glowing Bald Cypress Chest
+tile.varietychests:customGlowingChest.sakura.name=Glowing Sakura Chest
+
+tile.varietychests:customTrapChest.redwood.name=Trapped Redwood Chest
+tile.varietychests:customTrapChest.fir.name=Trapped Fir Chest
+tile.varietychests:customTrapChest.acacia_exbl.name=Trapped Acacia Chest
+tile.varietychests:customTrapChest.cypress.name=Trapped Cypress Chest
+tile.varietychests:customTrapChest.japanesemaple.name=Trapped Japanese Maple Chest
+tile.varietychests:customTrapChest.rainboweucalyptus.name=Trapped Rainbow Eucalyptus Chest
+tile.varietychests:customTrapChest.autumn.name=Trapped Autumn Chest
+tile.varietychests:customTrapChest.baldcypress.name=Trapped Bald Cypress Chest
+tile.varietychests:customTrapChest.sakura.name=Trapped Sakura Chest

@@ -22,3 +22,5 @@ tile.varietychests:customTrapChest.original.name=Redstonetruhe
 tile.varietychests:customTrapChest.NULL_CHEST.name=Du solltest diesen Typ nicht haben! Leg es hin.
 
 itemGroup.varietychests:vcm_tab=Variety Chests
+
+varietychests:nei.recipes=Variety Chests
