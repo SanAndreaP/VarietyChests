@@ -22,3 +22,5 @@ tile.varietychests:customTrapChest.original.name=Coffre piégé
 tile.varietychests:customTrapChest.NULL_CHEST.name=Vous n'êtes pas supposés voir ça écrit! Sérieusement, SVP, mettez-le ailleurs!
 
 itemGroup.varietychests:vcm_tab=Variety Chests
+
+varietychests:nei.recipes=Variety Chests
