@@ -42,7 +42,7 @@ idea {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.2.0"
+version = "1.7.10-1.2.1"
 group = "de.sanandrew.mods"
 archivesBaseName = 'VarietyChests'
 

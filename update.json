@@ -1,12 +1,8 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "downloadUrl": "",
-  "description": "Initial release with new update manager! Nothing exciting going in here...",
+  "description": "fixes recipe messup",
   "changelog": [
-    "added new trapped chest type",
-    "replaced deprecated ManPack methods with new ones",
-    "now requires Forge 1286 at minimum",
-    "Using new Update Manager. You'll get automatically notified if there's a new version out!",
-    "new creative tab for all the custom chests!"
+    "fixed 'plain' chest recipes"
   ]
 }
