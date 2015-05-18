@@ -28,6 +28,11 @@ buildscript {
     }
 }
 
+task downloadLibs(type: LibDownloader) {
+	sourceUrl = 'http://minecraft.curseforge.com/mc-mods/60041-extrabiomesxl/files/2235261/download'
+    target = file('libs/ExtraBiomesXL.jar')
+}
+
 apply plugin: 'idea'
 idea {
     module {
@@ -45,6 +50,9 @@ minecraft {
     version = "1.7.10-10.13.3.1401-1710ls"
     runDir = "minecraft"
 }
+
+setupDecompWorkspace.finalizedBy downloadLibs
+setupDevWorkspace.finalizedBy downloadLibs
 
 processResources {
     inputs.property "version", project.version
@@ -120,5 +128,18 @@ uploadDeployDev {
         pom.artifactId = project.name
         pom.version = project.version + '-deobf'
         repository(url: project.releaseRepoUrl)
+    }
+}
+
+class LibDownloader extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+       ant.get(src: sourceUrl, dest: target)
     }
 }
