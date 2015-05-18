@@ -1,6 +1,6 @@
 /*******************************************************************************************************************
  * Authors:   SanAndreasP
- * Copyright: SanAndreasP, SilverChiren and CliffracerX
+ * Copyright: SanAndreasP
  * License:   Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  *                http://creativecommons.org/licenses/by-nc-sa/4.0/
  *******************************************************************************************************************/
@@ -22,6 +22,8 @@ public class RecipePlainChests
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
         ItemStack wood = null;
+        boolean foundChest = false;
+
         for( int slotId = 0; slotId < inventoryCrafting.getSizeInventory(); slotId++ ) {
             ItemStack slot = inventoryCrafting.getStackInSlot(slotId);
             if( slot == null ) {
@@ -32,6 +34,8 @@ public class RecipePlainChests
                 Block block = Block.getBlockFromItem(slot.getItem());
                 if( block != Blocks.chest && block != VarietyChests.customChest ) {
                     return false;
+                } else {
+                    foundChest = true;
                 }
             } else {
                 if( wood == null ) {
@@ -49,7 +53,7 @@ public class RecipePlainChests
             }
         }
 
-        return true;
+        return foundChest;
     }
 
     @Override
@@ -70,6 +74,6 @@ public class RecipePlainChests
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return ChestType.getNewItemStackFromType(VarietyChests.customChest, ChestType.ORIGINAL, 1);
     }
 }

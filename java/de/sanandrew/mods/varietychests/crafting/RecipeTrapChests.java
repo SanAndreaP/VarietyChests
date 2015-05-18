@@ -73,6 +73,6 @@ public class RecipeTrapChests
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return ChestType.getNewItemStackFromType(VarietyChests.customTrapChest, ChestType.ORIGINAL, 1);
     }
 }

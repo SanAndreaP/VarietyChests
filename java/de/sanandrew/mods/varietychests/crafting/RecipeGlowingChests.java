@@ -74,6 +74,6 @@ public class RecipeGlowingChests
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return ChestType.getNewItemStackFromType(VarietyChests.customGlowingChest, ChestType.ORIGINAL, 1);
     }
 }

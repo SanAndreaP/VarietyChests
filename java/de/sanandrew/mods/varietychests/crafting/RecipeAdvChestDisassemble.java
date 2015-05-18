@@ -71,6 +71,6 @@ public class RecipeAdvChestDisassemble
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return ChestType.getNewItemStackFromType(VarietyChests.customChest, ChestType.ORIGINAL, 1);
     }
 }
