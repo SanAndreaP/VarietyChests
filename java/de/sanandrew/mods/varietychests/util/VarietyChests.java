@@ -42,8 +42,8 @@ import net.minecraftforge.oredict.RecipeSorter.Category;
 public final class VarietyChests
 {
     public static final String MOD_ID = "varietychests";
-    public static final String MOD_DEPS = "required-after:sapmanpack@[2.4.0,);after:ExtrabiomesXL;after:NotEnoughItems";
-    public static final String VERSION = "1.2.1";
+    public static final String MOD_DEPS = "required-after:sapmanpack@[2.4.0,);after:ExtrabiomesXL;after:BiomesOPlenty;after:Waila;after:NotEnoughItems";
+    public static final String VERSION = "1.3.0";
     public static final String PROXY_CLIENT = "de.sanandrew.mods.varietychests.client.util.ClientProxy";
     public static final String PROXY_SERVER = "de.sanandrew.mods.varietychests.util.CommonProxy";
 
@@ -63,7 +63,7 @@ public final class VarietyChests
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        VcConfig.configuration = new Configuration(event.getSuggestedConfigurationFile(), "1.0");
+        VcConfig.configuration = new Configuration(event.getSuggestedConfigurationFile(), "1.1");
         VcConfig.syncConfig();
 
         SAPUpdateManager.createUpdateManager("Variety Chests", new Version(VERSION), "https://raw.githubusercontent.com/SanAndreasP/VarietyChests/master/update.json",
@@ -102,6 +102,14 @@ public final class VarietyChests
 
         if( VcConfig.extraBiomesXlTypes ) {
             ModInitHelperInst.loadWhenModAvailable("ExtrabiomesXL", "de.sanandrew.mods.varietychests.util.modcompat.ebxl.EbxlIntegration").preInitialize();
+        }
+
+        if( VcConfig.biomesOPlentyTypes ) {
+            ModInitHelperInst.loadWhenModAvailable("BiomesOPlenty", "de.sanandrew.mods.varietychests.util.modcompat.bop.BopIntegration").preInitialize();
+        }
+
+        if( VcConfig.wailaOverlayCompat ) {
+            ModInitHelperInst.loadWhenModAvailable("Waila", "de.sanandrew.mods.varietychests.util.modcompat.waila.WailaIntegration").preInitialize();
         }
     }
 

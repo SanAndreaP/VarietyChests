@@ -28,9 +28,19 @@ buildscript {
     }
 }
 
-task downloadLibs(type: LibDownloader) {
+task downloadEBXL(type: LibDownloader) {
 	sourceUrl = 'http://minecraft.curseforge.com/mc-mods/60041-extrabiomesxl/files/2235261/download'
     target = file('libs/ExtraBiomesXL.jar')
+}
+
+task downloadBOP(type: LibDownloader) {
+	sourceUrl = 'http://minecraft.curseforge.com/mc-mods/220318-biomes-o-plenty/files/2229386/download'
+    target = file('libs/BiomesOPlenty.jar')
+}
+
+task downloadWAILA(type: LibDownloader) {
+    sourceUrl = 'http://minecraft.curseforge.com/mc-mods/73488-waila/files/2230518/download'
+    target = file('libs/Waila.jar')
 }
 
 apply plugin: 'idea'
@@ -42,7 +52,7 @@ idea {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.2.1"
+version = "1.7.10-1.3.0"
 group = "de.sanandrew.mods"
 archivesBaseName = 'VarietyChests'
 
@@ -51,8 +61,8 @@ minecraft {
     runDir = "minecraft"
 }
 
-setupDecompWorkspace.finalizedBy downloadLibs
-setupDevWorkspace.finalizedBy downloadLibs
+setupDecompWorkspace.finalizedBy downloadEBXL, downloadBOP, downloadWAILA
+setupDevWorkspace.finalizedBy downloadEBXL, downloadBOP, downloadWAILA
 
 processResources {
     inputs.property "version", project.version

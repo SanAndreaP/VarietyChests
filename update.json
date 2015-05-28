@@ -1,8 +1,10 @@
 {
-  "version": "1.2.1",
+  "version": "1.3.0",
   "downloadUrl": "",
-  "description": "fixes recipe messup",
+  "description": "adds Biomes O' Plenty support and also a WAILA fix!",
   "changelog": [
-    "fixed 'plain' chest recipes"
+    "Added Biomes O' Plenty support",
+    "fixed WAILA Overlay rendering the NULL-Chest, it will now properly render the name and type of the chest",
+    "fixed ordering in the creative tab"
   ]
 }

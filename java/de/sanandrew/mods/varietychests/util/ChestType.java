@@ -15,13 +15,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChestType
 {
     public static final ChestTypeList TYPES = new ChestTypeList();
+    private static final List<ChestType> TYPE_LIST = new ArrayList<>();
+    private static final List<String> NAME_LIST = new ArrayList<>();
     public static final ChestType NULL_TYPE = new ChestType("NULL_CHEST", new ResourceLocation("NULL_CHEST"), new ResourceLocation("NULL_CHEST"), null);
     public static final ChestType ORIGINAL = registerChestType("original", new ResourceLocation("minecraft", "textures/entity/chest/normal.png"),
                                                                new ResourceLocation("minecraft", "textures/entity/chest/normal_double.png"),
@@ -30,6 +33,8 @@ public class ChestType
     public static ChestType registerChestType(String name, ResourceLocation textureSingle, ResourceLocation textureDouble, ItemStack craftingItem) {
         ChestType newType = new ChestType(name, textureSingle, textureDouble, craftingItem);
         TYPES.put(name, newType);
+        TYPE_LIST.add(newType);
+        NAME_LIST.add(name);
         return newType;
     }
 
@@ -43,11 +48,11 @@ public class ChestType
     }
 
     public static String[] getTypeNames() {
-        return TYPES.keySet().toArray(new String[TYPES.size()]);
+        return NAME_LIST.toArray(new String[NAME_LIST.size()]);
     }
 
     public static ChestType[] getTypes() {
-        return TYPES.values().toArray(new ChestType[TYPES.size()]);
+        return TYPE_LIST.toArray(new ChestType[TYPE_LIST.size()]);
     }
 
     public static ChestType getType(ItemStack stack) {
@@ -59,7 +64,7 @@ public class ChestType
     }
 
     public static ChestType getTypeFromCraftingMaterial(ItemStack stack) {
-        for( ChestType type : TYPES.values() ) {
+        for( ChestType type : TYPE_LIST ) {
             if( SAPUtils.areStacksEqual(stack, type.crfItem, false) ) {
                 return type;
             }
